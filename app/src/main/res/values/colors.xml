@@ -2,14 +2,8 @@
 
 <resources>
 
-    <color name="primary">#03b0f5</color>
-    <color name="primary_dark">#0586d9</color>
-
-    <color name="second">#f2ce1b</color>
-    <color name="second_dark">#f2ce1b</color>
-
-    <color name="third">#4a90e2</color>
-    <color name="third_dark">#1f7ae1</color>
+    <color name="primary">#00b7bf</color>
+    <color name="primary_dark">#02a8ae</color>
 
     <color name="dark">#383737</color>
     <color name="medium_dark">#808080</color>
