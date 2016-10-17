@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "/Users/siebe/dev/github/samples-keyboardheight/app/build/intermediates/res/merged/debug/values-w720dp-v13/values-w720dp-v13.xml",
+        "outputFile": "/Users/siebe/dev/github/samples-github-java-developers/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w720dp-v13/values-w720dp-v13.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 127
                 },
                 "from": {
-                    "file": "/Users/siebe/dev/github/samples-keyboardheight/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/values-w720dp-v13/values-w720dp-v13.xml",
+                    "file": "/Users/siebe/dev/github/samples-github-java-developers/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/values-w720dp-v13/values-w720dp-v13.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.siebeprojects.samples.keyboardheight"
+    package="com.siebeprojects.samples.gitjavadev"
     android:versionCode="1000"
     android:versionName="1.0.0" >
 
     <uses-sdk
-        android:minSdkVersion="15"
+        android:minSdkVersion="16"
         android:targetSdkVersion="23" />
 
     <!-- Define the screen sizes -->
@@ -21,9 +21,8 @@
     <!-- Define the application -->
     <application android:label="@string/app_name" >
         <activity
-            android:name="com.siebeprojects.samples.keyboardheight.MainActivity"
-            android:theme="@style/Theme.AppCompat.Light"
-            android:windowSoftInputMode="stateAlwaysVisible|adjustNothing" >
+            android:name="com.siebeprojects.samples.gitjavadev.MainActivity"
+            android:theme="@style/Theme.AppCompat.Light" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
