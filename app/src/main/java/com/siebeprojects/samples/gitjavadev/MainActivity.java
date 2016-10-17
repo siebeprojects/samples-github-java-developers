@@ -15,7 +15,7 @@
  * along with Siebe Projects samples.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.siebeprojects.samples.keyboardheight;
+package com.siebeprojects.samples.gitjavadev;
 
 import android.widget.TextView;
 import android.view.View;
@@ -28,16 +28,12 @@ import android.content.res.Configuration;
 import android.widget.RelativeLayout;
 
 /**
- * MainActivity that initialises the keyboardheight 
- * provider and observer. 
+ * MainActivity. 
  */
-public final class MainActivity extends AppCompatActivity implements KeyboardHeightObserver {
+public final class MainActivity extends AppCompatActivity {
 
     /** Tag for logging */
     private final static String TAG = "sample_MainActivity";
-
-    /** The keyboard height provider */
-    private KeyboardHeightProvider keyboardHeightProvider;
 
     /**
      * {@inheritDoc}
@@ -46,18 +42,6 @@ public final class MainActivity extends AppCompatActivity implements KeyboardHei
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity);
-
-        keyboardHeightProvider = new KeyboardHeightProvider(this);
-
-        // make sure to start the keyboard height provider after the onResume
-        // of this activity. This is because a popup window must be initialised
-        // and attached to the activity root view. 
-        View view = findViewById(R.id.activitylayout);
-        view.post(new Runnable() {
-                public void run() {
-                    keyboardHeightProvider.start();
-                }
-            });
     }
 
     /**
@@ -66,7 +50,6 @@ public final class MainActivity extends AppCompatActivity implements KeyboardHei
     @Override
     public void onPause() {
         super.onPause();
-        keyboardHeightProvider.setKeyboardHeightObserver(null);
     }
 
     /**
@@ -75,7 +58,6 @@ public final class MainActivity extends AppCompatActivity implements KeyboardHei
     @Override
     public void onResume() {
         super.onResume();
-        keyboardHeightProvider.setKeyboardHeightObserver(this);
     }
 
     /**
@@ -84,24 +66,5 @@ public final class MainActivity extends AppCompatActivity implements KeyboardHei
     @Override
     public void onDestroy() {
         super.onDestroy();
-        keyboardHeightProvider.close();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onKeyboardHeightChanged(int height, int orientation) {
-
-        String or = orientation == Configuration.ORIENTATION_PORTRAIT ? "portrait" : "landscape";
-        Log.i(TAG, "onKeyboardHeightChanged in pixels: " + height + " " + or);
-
-        TextView tv = (TextView)findViewById(R.id.height_text);
-        tv.setText(Integer.toString(height) + " " + or);
-
-        // color the keyboard height view, this will stay when you close the keyboard
-        View view = findViewById(R.id.keyboard);
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)view .getLayoutParams();
-        params.height = height;
     }
 }
