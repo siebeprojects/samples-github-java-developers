@@ -15,7 +15,7 @@
  * along with Siebe Projects samples.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.siebeprojects.samples.gitjavadev;
+package com.siebeprojects.samples.developers;
 
 import android.widget.TextView;
 import android.view.View;
@@ -30,10 +30,10 @@ import android.widget.RelativeLayout;
 /**
  * MainActivity. 
  */
-public final class MainActivity extends AppCompatActivity {
+public final class DevelopersActivity extends AppCompatActivity {
 
     /** Tag for logging */
-    private final static String TAG = "sample_MainActivity";
+    private final static String TAG = "sample_DevelopersActivity";
 
     /**
      * {@inheritDoc}
@@ -41,7 +41,7 @@ public final class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity);
+        setContentView(R.layout.activity_developers);
     }
 
     /**

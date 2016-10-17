@@ -1,27 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Samples" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.Samples" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/primary</item>
     </style>
 
-    <style name="Theme.Samples.Launch">
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-    </style>
-
-    <style name="Theme.Samples.Main">
-        <item name="windowActionModeOverlay">true</item>
-        <item name="actionModeBackground">@color/primary</item>
-    </style>
-
     <style name="Theme.Samples.Sub">
-        <item name="windowActionModeOverlay">true</item>
         <item name="actionModeBackground">@color/primary</item>
         <item name="actionModeCloseDrawable">@drawable/ic_arrow_back_white_24dp</item>
     </style>
