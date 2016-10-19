@@ -32,10 +32,11 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import com.siebeprojects.samples.github.R;
 import com.siebeprojects.samples.github.model.User;
 
 import java.util.List;
+
+import com.siebeprojects.samples.github.R;
 
 /**
  * The main users activity showing a list of 
@@ -51,6 +52,9 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
         
     /** The presenter loading users */
     private UsersPresenter presenter;
+
+    /** the activity is paused */
+    private boolean paused;
 
     /**
      * {@inheritDoc}
@@ -77,6 +81,7 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
     @Override
     public void onPause() {
         super.onPause();
+        paused = true;
         adapter.setListener(null);
     }
 
@@ -86,6 +91,8 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
     @Override
     public void onResume() {
         super.onResume();
+        paused = false;
+
         adapter.setListener(this);
         presenter.loadUsers();
     }

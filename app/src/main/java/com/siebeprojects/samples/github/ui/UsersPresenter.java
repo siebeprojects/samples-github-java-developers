@@ -22,7 +22,15 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.siebeprojects.samples.github.R;
+import com.siebeprojects.samples.github.service.GitHubApiAdapter;
+
 import com.siebeprojects.samples.github.model.User;
+import com.siebeprojects.samples.github.model.SearchResult;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * UsersPresenter responsible for loading and updating the adapter
@@ -30,7 +38,7 @@ import com.siebeprojects.samples.github.model.User;
  */
 public class UsersPresenter {
 
-    public final static String TAG  = "siu_UsersPresenter";
+    public final static String TAG  = "samples_UsersPresenter";
 
     /** The users activity */
     private UsersActivity activity;
@@ -54,17 +62,45 @@ public class UsersPresenter {
      */
     public void loadUsers() {
 
-        // first clear all users from the adapter
+        GitHubApiAdapter adapter = GitHubApiAdapter.getInstance();
+        
+        Observable<SearchResult> result = adapter.searchUsers(GitHubApiAdapter.QUERY_JAVA_DEVELOPERS, 10, 1);
+
+        // retrofit + rxjava 
+        // Observable should already have a thread attached to it.
+        // Compositive subscription to close all at the same time.
+
+        // Retrofit does the 
+
+        result.subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Subscriber<SearchResult>() {
+
+                    @Override
+                        public void onCompleted() {
+                    }
+                    
+                    @Override
+                        public void onError(Throwable e) {
+                        Log.i(TAG, "onError: " + e);
+                    }
+
+                    @Override
+                        public void onNext(SearchResult result) {
+                        handleSearchResult(result);
+                    }
+                    });
+    }
+
+    /** 
+     * Handle the search result
+     * 
+     * @param result The search result
+     */
+    private void handleSearchResult(SearchResult result) {
+        
         adapter.clear();
-
-        User user = new User();
-        user.setId(1);
-        user.setAvatarUrl("https://avatars.githubusercontent.com/u/1?v=3");
-        user.setName("Tom Preston-Werner");
-        user.setCreatedAt("2007-10-20T05:24:19Z");
-
-        List<User> users = new ArrayList<User>();
-        users.add(user);
+        List<User> users = result.getItems();
         adapter.addItems(users);
     }
 
