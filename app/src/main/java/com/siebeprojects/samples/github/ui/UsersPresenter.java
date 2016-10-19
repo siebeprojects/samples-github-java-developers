@@ -89,8 +89,17 @@ public class UsersPresenter {
         param.add("q", "language:java");
         
         Observable<Response<SearchResult<User>>> result = client.searchUsers(param);
+
+        // retrofit + rxjava 
+        // Observable should already have a thread attached to it.
+        // Compositive subscription to close all at the same time.
+
+        // Retrofit does the 
+        
+
         result.subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
+            .subscribe() {
             .unsafeSubscribe(new Subscriber<Response<SearchResult<User>>>() {
 
                     @Override
