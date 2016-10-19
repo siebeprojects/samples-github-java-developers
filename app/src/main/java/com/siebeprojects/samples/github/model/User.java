@@ -27,7 +27,6 @@ import com.google.gson.annotations.SerializedName;
  */
 public class User {
 
-
     @SerializedName("login")
     @Expose
     private String login;
@@ -49,15 +48,6 @@ public class User {
     @SerializedName("followers_url")
     @Expose
     private String followersUrl;
-    @SerializedName("following_url")
-    @Expose
-    private String followingUrl;
-    @SerializedName("gists_url")
-    @Expose
-    private String gistsUrl;
-    @SerializedName("starred_url")
-    @Expose
-    private String starredUrl;
     @SerializedName("subscriptions_url")
     @Expose
     private String subscriptionsUrl;
@@ -67,15 +57,27 @@ public class User {
     @SerializedName("repos_url")
     @Expose
     private String reposUrl;
-    @SerializedName("events_url")
-    @Expose
-    private String eventsUrl;
     @SerializedName("received_events_url")
     @Expose
     private String receivedEventsUrl;
     @SerializedName("type")
     @Expose
     private String type;
+    @SerializedName("score")
+    @Expose
+    private double score;
+    @SerializedName("following_url")
+    @Expose
+    private String followingUrl;
+    @SerializedName("gists_url")
+    @Expose
+    private String gistsUrl;
+    @SerializedName("starred_url")
+    @Expose
+    private String starredUrl;
+    @SerializedName("events_url")
+    @Expose
+    private String eventsUrl;
     @SerializedName("site_admin")
     @Expose
     private boolean siteAdmin;
@@ -118,20 +120,6 @@ public class User {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
-
-    /**
-     * Get the initials for this space
-     *
-     */
-    public String getInitials() {
-        if (TextUtils.isEmpty(name)) {
-            return "";
-        } else {
-            return name.substring(0, 1);
-        }
-    }
-
-
 
     /**
      * 
@@ -262,60 +250,6 @@ public class User {
     /**
      * 
      * @return
-     * The followingUrl
-     */
-    public String getFollowingUrl() {
-        return followingUrl;
-    }
-
-    /**
-     * 
-     * @param followingUrl
-     * The following_url
-     */
-    public void setFollowingUrl(String followingUrl) {
-        this.followingUrl = followingUrl;
-    }
-
-    /**
-     * 
-     * @return
-     * The gistsUrl
-     */
-    public String getGistsUrl() {
-        return gistsUrl;
-    }
-
-    /**
-     * 
-     * @param gistsUrl
-     * The gists_url
-     */
-    public void setGistsUrl(String gistsUrl) {
-        this.gistsUrl = gistsUrl;
-    }
-
-    /**
-     * 
-     * @return
-     * The starredUrl
-     */
-    public String getStarredUrl() {
-        return starredUrl;
-    }
-
-    /**
-     * 
-     * @param starredUrl
-     * The starred_url
-     */
-    public void setStarredUrl(String starredUrl) {
-        this.starredUrl = starredUrl;
-    }
-
-    /**
-     * 
-     * @return
      * The subscriptionsUrl
      */
     public String getSubscriptionsUrl() {
@@ -370,24 +304,6 @@ public class User {
     /**
      * 
      * @return
-     * The eventsUrl
-     */
-    public String getEventsUrl() {
-        return eventsUrl;
-    }
-
-    /**
-     * 
-     * @param eventsUrl
-     * The events_url
-     */
-    public void setEventsUrl(String eventsUrl) {
-        this.eventsUrl = eventsUrl;
-    }
-
-    /**
-     * 
-     * @return
      * The receivedEventsUrl
      */
     public String getReceivedEventsUrl() {
@@ -419,6 +335,96 @@ public class User {
      */
     public void setType(String type) {
         this.type = type;
+    }
+
+    /**
+     * 
+     * @return
+     * The score
+     */
+    public double getScore() {
+        return score;
+    }
+
+    /**
+     * 
+     * @param score
+     * The score
+     */
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    /**
+     * 
+     * @return
+     * The followingUrl
+     */
+    public String getFollowingUrl() {
+        return followingUrl;
+    }
+
+    /**
+     * 
+     * @param followingUrl
+     * The following_url
+     */
+    public void setFollowingUrl(String followingUrl) {
+        this.followingUrl = followingUrl;
+    }
+
+    /**
+     * 
+     * @return
+     * The gistsUrl
+     */
+    public String getGistsUrl() {
+        return gistsUrl;
+    }
+
+    /**
+     * 
+     * @param gistsUrl
+     * The gists_url
+     */
+    public void setGistsUrl(String gistsUrl) {
+        this.gistsUrl = gistsUrl;
+    }
+
+    /**
+     * 
+     * @return
+     * The starredUrl
+     */
+    public String getStarredUrl() {
+        return starredUrl;
+    }
+
+    /**
+     * 
+     * @param starredUrl
+     * The starred_url
+     */
+    public void setStarredUrl(String starredUrl) {
+        this.starredUrl = starredUrl;
+    }
+
+    /**
+     * 
+     * @return
+     * The eventsUrl
+     */
+    public String getEventsUrl() {
+        return eventsUrl;
+    }
+
+    /**
+     * 
+     * @param eventsUrl
+     * The events_url
+     */
+    public void setEventsUrl(String eventsUrl) {
+        this.eventsUrl = eventsUrl;
     }
 
     /**
@@ -672,5 +678,16 @@ public class User {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
-}
 
+    /**
+     * Get the initials for this space
+     *
+     */
+    public String getInitials() {
+        if (TextUtils.isEmpty(name)) {
+            return "";
+        } else {
+            return name.substring(0, 1);
+        }
+    }
+}
