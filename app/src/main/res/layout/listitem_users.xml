@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/layout_avatar"
+            android:background="@drawable/listitem_avatar"
+            android:layout_width="@dimen/listitem_avatar_size"
+            android:layout_height="@dimen/listitem_avatar_size"
+            android:layout_margin="@dimen/border_medium">
+
+            <TextView
+                android:id="@+id/text_initials"
+                style="@style/SampleText.Large"
+                android:layout_centerInParent="true"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:textColor="@color/font_light"/>
+
+            <ImageView
+                android:id="@+id/image_avatar"
+                android:layout_width="@dimen/listitem_avatar_size"
+                android:layout_height="@dimen/listitem_avatar_size"
+                android:layout_centerInParent="true"
+                android:padding="1dp"
+                android:adjustViewBounds="true"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginRight="@dimen/border_medium"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_name"
+                style="@style/SampleText.Medium"
+                android:layout_marginRight="@dimen/border_small"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/text_description"
+                style="@style/SampleText.Small.Gray"
+                android:layout_marginRight="@dimen/border_small"
+                android:ellipsize="end" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        style="@style/SampleLine"
+        android:layout_marginLeft="@dimen/listitem_border_line"
+        android:layout_marginRight="@dimen/border_medium"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>
