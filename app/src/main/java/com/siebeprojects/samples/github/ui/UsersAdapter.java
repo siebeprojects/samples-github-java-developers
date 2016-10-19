@@ -33,7 +33,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide; 
 
 import com.siebeprojects.samples.github.R;
-import com.rejasupotaro.octodroid.models.User;
+import com.siebeprojects.samples.github.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

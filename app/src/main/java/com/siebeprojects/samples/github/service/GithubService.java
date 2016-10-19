@@ -18,9 +18,11 @@
 package com.siebeprojects.samples.github.service;
 
 import com.siebeprojects.samples.github.model.User;
-import retrofit.http.GET;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import com.siebeprojects.samples.github.model.SearchResult;
+
+import retrofit2.http.GET;
+import retrofit2.http.Query;
+
 import rx.Observable;
 
 /**
@@ -28,6 +30,6 @@ import rx.Observable;
  */
 public interface GitHubService {
 
-    @GET("/users")
-    Observable<User> getUsers(@Query("q") String query, @Query("per_page") int perPage, @Query("page") int page);
+    @GET("/search/users")
+    Observable<SearchResult> searchUsers(@Query("q") String query, @Query("per_page") int perPage, @Query("page") int page);
 }

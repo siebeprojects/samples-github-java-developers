@@ -17,8 +17,9 @@
 
 package com.siebeprojects.samples.github.service;
 
-import flickr.demo.qvdev.com.flickrdemo.model.PhotoDetail;
-import flickr.demo.qvdev.com.flickrdemo.model.SearchResult;
+import com.siebeprojects.samples.github.model.User;
+import com.siebeprojects.samples.github.model.SearchResult;
+
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;

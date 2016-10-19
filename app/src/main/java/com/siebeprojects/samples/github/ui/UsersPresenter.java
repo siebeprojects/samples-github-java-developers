@@ -22,24 +22,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.siebeprojects.samples.github.R;
-import com.siebeprojects.samples.github.server.GitHubController;
+import com.siebeprojects.samples.github.service.GitHubApiAdapter;
 
-import com.rejasupotaro.octodroid.models.User;
-import com.rejasupotaro.octodroid.GitHubClient;
-import com.rejasupotaro.octodroid.GitHubClient;
-import com.rejasupotaro.octodroid.http.ApiClient;
-import com.rejasupotaro.octodroid.http.Method;
-import com.rejasupotaro.octodroid.http.Params;
-import com.rejasupotaro.octodroid.http.Response;
-import com.rejasupotaro.octodroid.models.Event;
-import com.rejasupotaro.octodroid.models.Notification;
-import com.rejasupotaro.octodroid.models.Repository;
-import com.rejasupotaro.octodroid.models.SearchResult;
-import com.rejasupotaro.octodroid.models.User;
-import com.rejasupotaro.octodroid.http.Response;
-import com.rejasupotaro.octodroid.http.Link;
-import com.rejasupotaro.octodroid.http.Params;
-import com.rejasupotaro.octodroid.models.User;
+import com.siebeprojects.samples.github.model.User;
+import com.siebeprojects.samples.github.model.SearchResult;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -60,9 +46,6 @@ public class UsersPresenter {
     /** The users adapter */
     private UsersAdapter adapter;
 
-    /** The github controller */
-    private GitHubController controller;
-
     /** 
      * Create a new UsersPresenter
      * 
@@ -72,9 +55,6 @@ public class UsersPresenter {
     UsersPresenter(UsersActivity activity, UsersAdapter adapter) {
         this.activity = activity;
         this.adapter = adapter;
-
-        // this may be set through Dependency injection
-        this.controller = new GitHubController();
     }
 
     /** 
@@ -82,25 +62,19 @@ public class UsersPresenter {
      */
     public void loadUsers() {
 
-        GitHubClient client = controller.getClient();
-
-        Params param = new Params();
-        param.add("per_page", "5");
-        param.add("q", "language:java");
+        GitHubApiAdapter adapter = GitHubApiAdapter.getInstance();
         
-        Observable<Response<SearchResult<User>>> result = client.searchUsers(param);
+        Observable<SearchResult> result = adapter.searchUsers(GitHubApiAdapter.QUERY_JAVA_DEVELOPERS, 10, 1);
 
         // retrofit + rxjava 
         // Observable should already have a thread attached to it.
         // Compositive subscription to close all at the same time.
 
         // Retrofit does the 
-        
 
         result.subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe() {
-            .unsafeSubscribe(new Subscriber<Response<SearchResult<User>>>() {
+            .subscribe(new Subscriber<SearchResult>() {
 
                     @Override
                         public void onCompleted() {
@@ -112,8 +86,8 @@ public class UsersPresenter {
                     }
 
                     @Override
-                        public void onNext(Response<SearchResult<User>> response) {
-                        handleSearchResult(response.entity());
+                        public void onNext(SearchResult result) {
+                        handleSearchResult(result);
                     }
                     });
     }
@@ -121,17 +95,14 @@ public class UsersPresenter {
     /** 
      * Handle the search result
      * 
-     * @param result
+     * @param result The search result
      */
     private void handleSearchResult(SearchResult result) {
-
+        
         adapter.clear();
         List<User> users = result.getItems();
         adapter.addItems(users);
     }
-
-
-
 
     /** 
      * Stop this presenter

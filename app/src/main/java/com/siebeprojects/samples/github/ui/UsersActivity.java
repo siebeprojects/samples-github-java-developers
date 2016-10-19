@@ -32,7 +32,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import com.rejasupotaro.octodroid.models.User;
+import com.siebeprojects.samples.github.model.User;
 
 import java.util.List;
 
