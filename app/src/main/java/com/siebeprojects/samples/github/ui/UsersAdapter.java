@@ -33,7 +33,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide; 
 
 import com.siebeprojects.samples.github.R;
-import com.siebeprojects.samples.github.model.User;
+import com.rejasupotaro.octodroid.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +92,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
         holder.name.setText(user.getName());
         holder.description.setText(user.getCreatedAt());
-        holder.initials.setText(user.getInitials().toUpperCase());
+        holder.initials.setText(getInitials(user.getName()));
 
         String url = user.getAvatarUrl();
         if (TextUtils.isEmpty(url)) {
@@ -155,6 +155,20 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     public void addItems(List<User> newItems) {
         items.addAll(newItems);
     }
+
+    /** 
+     * 
+     * 
+     * @param position 
+     */
+    private String getInitials(String name) {
+        if (TextUtils.isEmpty(name)) {
+            return "";
+        } else {
+            return name.substring(0, 1).toUpperCase();
+        }
+    }
+
 
     /** 
      * handleOnClick

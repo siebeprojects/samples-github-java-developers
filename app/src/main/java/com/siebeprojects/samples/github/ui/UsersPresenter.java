@@ -22,7 +22,29 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.siebeprojects.samples.github.R;
-import com.siebeprojects.samples.github.model.User;
+import com.siebeprojects.samples.github.server.GitHubController;
+
+import com.rejasupotaro.octodroid.models.User;
+import com.rejasupotaro.octodroid.GitHubClient;
+import com.rejasupotaro.octodroid.GitHubClient;
+import com.rejasupotaro.octodroid.http.ApiClient;
+import com.rejasupotaro.octodroid.http.Method;
+import com.rejasupotaro.octodroid.http.Params;
+import com.rejasupotaro.octodroid.http.Response;
+import com.rejasupotaro.octodroid.models.Event;
+import com.rejasupotaro.octodroid.models.Notification;
+import com.rejasupotaro.octodroid.models.Repository;
+import com.rejasupotaro.octodroid.models.SearchResult;
+import com.rejasupotaro.octodroid.models.User;
+import com.rejasupotaro.octodroid.http.Response;
+import com.rejasupotaro.octodroid.http.Link;
+import com.rejasupotaro.octodroid.http.Params;
+import com.rejasupotaro.octodroid.models.User;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * UsersPresenter responsible for loading and updating the adapter
@@ -30,13 +52,16 @@ import com.siebeprojects.samples.github.model.User;
  */
 public class UsersPresenter {
 
-    public final static String TAG  = "siu_UsersPresenter";
+    public final static String TAG  = "samples_UsersPresenter";
 
     /** The users activity */
     private UsersActivity activity;
 
     /** The users adapter */
     private UsersAdapter adapter;
+
+    /** The github controller */
+    private GitHubController controller;
 
     /** 
      * Create a new UsersPresenter
@@ -47,6 +72,9 @@ public class UsersPresenter {
     UsersPresenter(UsersActivity activity, UsersAdapter adapter) {
         this.activity = activity;
         this.adapter = adapter;
+
+        // this may be set through Dependency injection
+        this.controller = new GitHubController();
     }
 
     /** 
@@ -54,19 +82,47 @@ public class UsersPresenter {
      */
     public void loadUsers() {
 
-        // first clear all users from the adapter
+        GitHubClient client = controller.getClient();
+
+        Params param = new Params();
+        param.add("per_page", "5");
+        param.add("q", "language:java");
+        
+        Observable<Response<SearchResult<User>>> result = client.searchUsers(param);
+        result.subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .unsafeSubscribe(new Subscriber<Response<SearchResult<User>>>() {
+
+                    @Override
+                        public void onCompleted() {
+                    }
+                    
+                    @Override
+                        public void onError(Throwable e) {
+                        Log.i(TAG, "onError: " + e);
+                    }
+
+                    @Override
+                        public void onNext(Response<SearchResult<User>> response) {
+                        handleSearchResult(response.entity());
+                    }
+                    });
+    }
+
+    /** 
+     * Handle the search result
+     * 
+     * @param result
+     */
+    private void handleSearchResult(SearchResult result) {
+
         adapter.clear();
-
-        User user = new User();
-        user.setId(1);
-        user.setAvatarUrl("https://avatars.githubusercontent.com/u/1?v=3");
-        user.setName("Tom Preston-Werner");
-        user.setCreatedAt("2007-10-20T05:24:19Z");
-
-        List<User> users = new ArrayList<User>();
-        users.add(user);
+        List<User> users = result.getItems();
         adapter.addItems(users);
     }
+
+
+
 
     /** 
      * Stop this presenter
