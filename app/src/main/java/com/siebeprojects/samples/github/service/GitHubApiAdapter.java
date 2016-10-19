@@ -44,7 +44,8 @@ public class GitHubApiAdapter {
 
     /** 
      * Obtain an instance of this GitHubApiAdapter. 
-     * Dependency injection would avoid having this as a singleton.
+     * Dependency injection would avoid having this as a 
+     * singleton in its own class.
      * 
      * @return The GitHubApiAdapter instance
      */
