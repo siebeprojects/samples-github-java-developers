@@ -17,26 +17,13 @@
 
 package com.siebeprojects.samples.github.ui;
 
-import android.app.Activity;
-
 import android.os.Bundle;
-
 import android.support.v7.app.AppCompatActivity;
-
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.View;
-
-import android.widget.ImageButton;
-import android.widget.ListView;
-
-import com.siebeprojects.samples.github.model.User;
-
-import java.util.List;
-
 import com.siebeprojects.samples.github.R;
+import com.siebeprojects.samples.github.model.User;
 
 /**
  * The main users activity showing a list of 

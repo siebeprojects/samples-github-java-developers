@@ -18,14 +18,12 @@
 package com.siebeprojects.samples.github.ui;
 
 import android.util.Log;
-import java.util.List;
-import java.util.ArrayList;
 
-import com.siebeprojects.samples.github.R;
+import com.siebeprojects.samples.github.model.SearchResult;
+import com.siebeprojects.samples.github.model.User;
 import com.siebeprojects.samples.github.service.GitHubApiAdapter;
 
-import com.siebeprojects.samples.github.model.User;
-import com.siebeprojects.samples.github.model.SearchResult;
+import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
