@@ -73,7 +73,6 @@ public class UsersPresenter {
     public void loadFirstPage() {
 
         if (loading || curPage != 0) {
-            Log.i(TAG, "First page already loaded or we are already loading");
             return;
         }
         loadPage(nextPage);
@@ -84,9 +83,7 @@ public class UsersPresenter {
      */
     public void loadNextPage() {
 
-        // nothing more to load
         if (loading || curPage == nextPage) {
-            Log.i(TAG, "No pages more to load");
             return;
         }
         loadPage(nextPage);
@@ -97,7 +94,7 @@ public class UsersPresenter {
      * 
      * @param page The page to be loaded
      */
-    private void loadPage(final int page) {
+    private void loadPage(int page) {
 
         // Currently loading a page
         loading = true;

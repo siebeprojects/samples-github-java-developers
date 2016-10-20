@@ -38,7 +38,7 @@ import com.siebeprojects.samples.github.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import com.siebeprojects.samples.github.util.CropCircleTransformation;
 
 
 /**
@@ -89,10 +89,22 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
         // Get the data model based on position
         User user = items.get(position);
+        
+        String name = user.getName();
+        String createdAt = user.getCreatedAt();
 
-        holder.name.setText(user.getLogin());
-        holder.description.setText(user.getCreatedAt());
-        holder.initials.setText(getInitials(user.getLogin()));
+        // set the name field 
+        if (TextUtils.isEmpty(name)) {
+            name = user.getLogin();
+        }
+        holder.name.setText(name);
+
+        // set the description field 
+        holder.description.setText(createdAt);
+        holder.description.setVisibility(TextUtils.isEmpty(createdAt) ? View.GONE : View.VISIBLE);
+
+        // set the avatar fields with initials
+        holder.initials.setText(getInitials(name));
 
         String url = user.getAvatarUrl();
         if (TextUtils.isEmpty(url)) {
@@ -168,16 +180,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     }
 
     /** 
-     * 
+     * Get the initials given the name of the user
      * 
      * @param position 
      */
     private String getInitials(String name) {
-        if (TextUtils.isEmpty(name)) {
-            return "";
-        } else {
-            return name.substring(0, 1).toUpperCase();
-        }
+        return (TextUtils.isEmpty(name)) ? "" : name.substring(0, 1).toUpperCase();
     }
 
 

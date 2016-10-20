@@ -41,7 +41,7 @@ public final class ThresholdOnScrollListener extends RecyclerView.OnScrollListen
     /** 
      * Construct a new ThresholdOnScrollListener
      * 
-     * @param manager 
+     * @param manager  
      * @param listener 
      * @param threshold
      */
@@ -59,10 +59,7 @@ public final class ThresholdOnScrollListener extends RecyclerView.OnScrollListen
         int totalItemCount   = manager.getItemCount();
         int firstVisibleItem = manager.findFirstVisibleItemPosition();
 
-        Log.i(TAG, "onScrolled: " + visibleItemCount + ", " + totalItemCount + ", " + firstVisibleItem);
-
         if ((totalItemCount - visibleItemCount) <= (firstVisibleItem + threshold)) {
-            Log.i(TAG, "notifyListener");
             notifyListener();
         }
     }
