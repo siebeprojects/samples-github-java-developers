@@ -15,7 +15,7 @@
  * along with Siebe Projects samples.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.siebeprojects.samples.github.ui;
+package com.siebeprojects.samples.github.util;
 
 /**
  * This listener will be notified when the user has scrolled 

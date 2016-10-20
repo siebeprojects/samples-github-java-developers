@@ -15,7 +15,7 @@
  * along with Siebe Projects samples.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.siebeprojects.samples.github.ui;
+package com.siebeprojects.samples.github.users;
 
 import android.util.Log;
 
@@ -180,10 +180,12 @@ public class UsersPresenter {
 
                     @Override
                     public void onCompleted() {
+                        loading = false;
                     }
                     
                     @Override
                     public void onError(Throwable e) {
+                        loading = false;
                         Log.i(TAG, "onError: " + e);
                     }
 
@@ -199,11 +201,5 @@ public class UsersPresenter {
      */
     private void addUsersToList(List<User> users) {
         adapter.addItems(users);
-    }
-
-    /** 
-     * Stop this presenter
-     */
-    public void stop() {
     }
 }

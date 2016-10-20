@@ -34,6 +34,6 @@ public interface GitHubService {
     @GET("/search/users")
     Observable<SearchResult> searchUsers(@Query("q") String query, @Query("per_page") int perPage, @Query("page") int page);
 
-    @GET("users/{username}")
-    Observable<User> getUser(@Path("username") String username);
+    @GET("users/{login}")
+    Observable<User> getUser(@Path("login") String login);
 }

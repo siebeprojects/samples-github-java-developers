@@ -15,7 +15,7 @@
  * along with Siebe Projects samples.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.siebeprojects.samples.github.ui;
+package com.siebeprojects.samples.github.util;
 
 import android.util.Log;
 import android.support.v7.widget.LinearLayoutManager;
@@ -45,7 +45,7 @@ public final class ThresholdOnScrollListener extends RecyclerView.OnScrollListen
      * @param listener 
      * @param threshold
      */
-    ThresholdOnScrollListener(LinearLayoutManager manager, ThresholdListener listener, int threshold) {
+    public ThresholdOnScrollListener(LinearLayoutManager manager, ThresholdListener listener, int threshold) {
         this.manager = manager;
         this.listener = listener;
         this.threshold = threshold;

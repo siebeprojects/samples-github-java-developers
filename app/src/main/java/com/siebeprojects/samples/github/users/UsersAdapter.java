@@ -15,7 +15,7 @@
  * along with Siebe Projects samples.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.siebeprojects.samples.github.ui;
+package com.siebeprojects.samples.github.users;
 
 import android.content.Context;
 
@@ -40,13 +40,12 @@ import java.util.List;
 
 import com.siebeprojects.samples.github.util.CropCircleTransformation;
 
-
 /**
  *
  */
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
 
-    private final static String TAG = "sample_UsersAdapter";
+    private final static String TAG = "samples_UsersAdapter";
 
     /** The list of users */
     private List<User> items;
@@ -203,15 +202,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     }
 
     /** 
-     * 
-     * 
-     * @param url 
-     * @param imageView The image view to use 
-     */
-    private void setAvatar(String url, ImageView imageView) {
-    }
-
-    /** 
      * The click listener informing a user has been clicked
      */
     public interface OnItemClickListener {
@@ -239,7 +229,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         /** */
         TextView initials;
 
-        /** The avatar image view */
+        /**  */
         ImageView avatar;
 
         /**

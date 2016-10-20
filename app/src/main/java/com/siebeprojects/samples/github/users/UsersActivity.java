@@ -15,8 +15,9 @@
  * along with Siebe Projects samples.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.siebeprojects.samples.github.ui;
+package com.siebeprojects.samples.github.users;
 
+import android.content.Intent;
 import android.util.Log;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,11 +27,18 @@ import android.support.v7.widget.RecyclerView;
 import com.siebeprojects.samples.github.R;
 import com.siebeprojects.samples.github.model.User;
 
+import com.siebeprojects.samples.github.user.UserActivity;
+import com.siebeprojects.samples.github.util.ThresholdListener;
+import com.siebeprojects.samples.github.util.ThresholdOnScrollListener;
+
 /**
  * The main users activity showing a list of 
  * Github users that use Java.
  */
 public final class UsersActivity extends AppCompatActivity implements UsersAdapter.OnItemClickListener, ThresholdListener {
+
+    /** The scrolling threshold before new items should be loaded */
+    private final static int SCROLL_THRESHOLD   = 5;
 
     /** Tag for logging */
     private final static String TAG = "samples_UsersActivity";
@@ -66,7 +74,7 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
         recyclerView.setLayoutManager(manager);
         adapter.setListener(this);
 
-        ThresholdOnScrollListener listener = new ThresholdOnScrollListener(manager, this, 5);
+        ThresholdOnScrollListener listener = new ThresholdOnScrollListener(manager, this, SCROLL_THRESHOLD);
         recyclerView.addOnScrollListener(listener);
     }
 
@@ -93,15 +101,9 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
      * {@inheritDoc}
      */
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void onItemClick(User user, int position) {
+        Intent intent = UserActivity.createLaunchIntent(this, user);
+        startActivity(intent);
     }
 
     /**
@@ -119,11 +121,5 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
      */
     public boolean isPaused() {
         return paused;
-    }
-
-    /**
-     * Show the user detail activity
-     */
-    private void showUserActivity() {
     }
 }

@@ -32,8 +32,8 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapResource;
 
 /** 
- * Added background drawing to the image in order to 
- * remove the transparency
+ * Added background filling with WHITE to the image in order to 
+ * remove the transparency.
  */
 public class CropCircleTransformation implements Transformation<Bitmap> {
 

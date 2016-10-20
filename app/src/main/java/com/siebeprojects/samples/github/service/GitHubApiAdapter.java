@@ -91,13 +91,13 @@ public class GitHubApiAdapter {
     }
 
     /** 
-     * Get user details for each user
+     * Get user details for each user and return the users as a list
      * 
      * @param query 
      * @param perPage
      * @param page 
      * 
-     * @return The Observable with a list of users  
+     * @return The Observable with a list of users
      */
     public Observable<List<User>> getUserDetailsAsList(List<User> users) {
 
@@ -110,8 +110,9 @@ public class GitHubApiAdapter {
     }
 
     /** 
-     * Get user details for each user
-     * 
+     * Get user details for each user, the users will be emitted 
+     * one by one.
+     *
      * @param query 
      * @param perPage
      * @param page 
@@ -128,15 +129,14 @@ public class GitHubApiAdapter {
             });
     }
 
-
     /** 
      * Get the user given the name
      * 
-     * @param name
+     * @param login The login name of the user
      * 
      * @return The Observable with the user 
      */
-    public Observable<User> getUser(String userName) {
-        return service.getUser(userName);
+    public Observable<User> getUser(String login) {
+        return service.getUser(login);
     }
 }
