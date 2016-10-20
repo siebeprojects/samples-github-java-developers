@@ -52,6 +52,9 @@ public class UsersPresenter {
     /** The page that can be loaded next */
     private int nextPage;
 
+    /** Is the presenter currently loading a page */
+    private boolean loading;
+    
     /** 
      * Create a new UsersPresenter
      * 
@@ -69,8 +72,8 @@ public class UsersPresenter {
      */
     public void loadFirstPage() {
 
-        if (curPage != 0) {
-            Log.i(TAG, "First page already loaded");
+        if (loading || curPage != 0) {
+            Log.i(TAG, "First page already loaded or we are already loading");
             return;
         }
         loadPage(nextPage);
@@ -82,7 +85,7 @@ public class UsersPresenter {
     public void loadNextPage() {
 
         // nothing more to load
-        if (curPage == nextPage) {
+        if (loading || curPage == nextPage) {
             Log.i(TAG, "No pages more to load");
             return;
         }
@@ -96,6 +99,9 @@ public class UsersPresenter {
      */
     private void loadPage(final int page) {
 
+        // Currently loading a page
+        loading = true;
+
         GitHubApiAdapter adapter = GitHubApiAdapter.getInstance();
         Observable<SearchResult> result = adapter.searchUsers(GitHubApiAdapter.QUERY_JAVA_DEVELOPERS, PER_PAGE, page);
 
@@ -104,11 +110,13 @@ public class UsersPresenter {
             .subscribe(new Subscriber<SearchResult>() {
 
                     @Override
-                        public void onCompleted() {
+                    public void onCompleted() {
+                        loading = false;
                     }
                     
                     @Override
                         public void onError(Throwable e) {
+                        loading = false;
                         Log.i(TAG, "onError: " + e);
                     }
 
@@ -133,8 +141,29 @@ public class UsersPresenter {
             return;
         }
         List<User> users = searchResult.getItems();
-        this.curPage = this.nextPage;
         addUsersToList(users);
+
+        updatePagination(searchResult.getTotalCount(), adapter.getItemCount());
+    }
+
+    /** 
+     * Update pagination data and see if more items can be loaded from GitHub.
+     * This should be done by the content in the Link header which contains the correct
+     * pagination details. For now it is calculated by the totalCount and currently loaded
+     * itemCount. 
+     *
+     * In order to get the Link header info the Observable should contain the Response
+     * Object and not directly the SearchResult object.
+     * 
+     * @param totalCount
+     * @param itemCount 
+     */
+    private void updatePagination(int totalCount, int itemCount) {
+
+        this.curPage = nextPage;
+        if (itemCount < totalCount) {
+            this.nextPage++;
+        } 
     }
 
     /** 

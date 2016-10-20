@@ -17,6 +17,7 @@
 
 package com.siebeprojects.samples.github.ui;
 
+import android.util.Log;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,10 +30,10 @@ import com.siebeprojects.samples.github.model.User;
  * The main users activity showing a list of 
  * Github users that use Java.
  */
-public final class UsersActivity extends AppCompatActivity implements UsersAdapter.OnItemClickListener {
+public final class UsersActivity extends AppCompatActivity implements UsersAdapter.OnItemClickListener, ThresholdListener {
 
     /** Tag for logging */
-    private final static String TAG = "sample_UsersActivity";
+    private final static String TAG = "samples_UsersActivity";
 
     /** The users adapter */
     private UsersAdapter adapter;
@@ -42,6 +43,9 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
 
     /** the activity is paused */
     private boolean paused;
+
+    /** The ThresholdOnScrollListener */
+    private ThresholdOnScrollListener listener;
 
     /**
      * {@inheritDoc}
@@ -57,9 +61,13 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
         adapter = new UsersAdapter(this);
         presenter = new UsersPresenter(this, adapter);
 
+        LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(manager);
         adapter.setListener(this);
+
+        ThresholdOnScrollListener listener = new ThresholdOnScrollListener(manager, this, 5);
+        recyclerView.addOnScrollListener(listener);
     }
 
     /**
@@ -94,6 +102,14 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
      */
     @Override
     public void onItemClick(User user, int position) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onThresholdReached() {
+        presenter.loadNextPage();
     }
 
     /** 
