@@ -20,13 +20,21 @@ package com.siebeprojects.samples.github.user;
 import android.content.Context;
 import android.content.Intent;
 
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import android.util.Log;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide; 
+import jp.wasabeef.glide.transformations.BlurTransformation;
+import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation;
+import com.siebeprojects.samples.github.util.CropCircleTransformation;
 
 import com.siebeprojects.samples.github.R;
 import com.siebeprojects.samples.github.model.User;
@@ -78,10 +86,6 @@ public final class UserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
-        initToolbar();
-
-        presenter = new UserPresenter(this);
-
         // get the conversation id value
         if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_LOGIN)) {
             this.login = savedInstanceState.getString(EXTRA_LOGIN);
@@ -92,7 +96,9 @@ public final class UserActivity extends AppCompatActivity {
             this.avatarUrl = intent.getStringExtra(EXTRA_AVATAR_URL);
         }
 
-        
+        initToolbar(login);
+        setAvatar(avatarUrl);
+
         presenter = new UserPresenter(this);
     }
 
@@ -120,7 +126,6 @@ public final class UserActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         boolean val = false;
         switch (item.getItemId()) {
         case android.R.id.home:
@@ -148,16 +153,51 @@ public final class UserActivity extends AppCompatActivity {
      * @param user The user to update
      */
     public void setUser(User user) {
-        Log.i(TAG, "setUser: " + user);
+
+        TextView tv = (TextView)findViewById(R.id.text_name);
+        tv.setText(user.getName());
+
+        tv = (TextView)findViewById(R.id.text_email);
+        tv.setText(user.getEmail());
+
+        tv = (TextView)findViewById(R.id.text_followers);
+        tv.setText(Integer.toString(user.getFollowers()));
+        
+        tv = (TextView)findViewById(R.id.text_createdat);
+        tv.setText(user.getCreatedAt());
     }
 
     /** 
      * 
      * 
      */
-    private void initToolbar() {
+    @SuppressWarnings("unchecked")
+    private void setAvatar(String avatarUrl) {
+
+        ImageView bkgImage    = (ImageView)findViewById(R.id.image_background);
+        ImageView avatarImage = (ImageView)findViewById(R.id.image_avatar);
+
+        if (TextUtils.isEmpty(avatarUrl)) {
+            Glide.clear(bkgImage);
+            Glide.clear(avatarImage);
+        } else {
+            Glide.with(this).load(avatarUrl)
+                .bitmapTransform(new CropCircleTransformation(this))
+                .into(avatarImage);
+
+            Glide.with(this).load(avatarUrl)
+                .bitmapTransform(new BlurTransformation(this, 50), new BrightnessFilterTransformation(this, -0.2f))
+                .into(bkgImage);
+        }
+    }
+
+    /** 
+     * 
+     * 
+     */
+    private void initToolbar(String title) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("foo foo");
+        toolbar.setTitle(login);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

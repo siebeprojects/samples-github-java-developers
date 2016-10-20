@@ -14,6 +14,10 @@
         android:smallScreens="true"
         android:xlargeScreens="true" />
 
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
     <!-- Generic Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
 
