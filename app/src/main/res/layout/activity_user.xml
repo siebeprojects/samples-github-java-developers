@@ -46,6 +46,7 @@
                     android:layout_height="@dimen/toolbar_avatar_size"
                     android:layout_gravity="center"
                     android:padding="@dimen/toolbar_avatar_border"
+                    android:transitionName="profile"
                     android:adjustViewBounds="true"/>
                 
             </FrameLayout>

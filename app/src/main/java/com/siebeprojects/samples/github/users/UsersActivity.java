@@ -20,9 +20,12 @@ package com.siebeprojects.samples.github.users;
 import android.content.Intent;
 import android.util.Log;
 import android.os.Bundle;
+import android.view.View;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.ActivityOptionsCompat;
 
 import com.siebeprojects.samples.github.R;
 import com.siebeprojects.samples.github.model.User;
@@ -101,9 +104,11 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
      * {@inheritDoc}
      */
     @Override
-    public void onItemClick(User user, int position) {
+    public void onItemClick(User user, int position, View transView) {
         Intent intent = UserActivity.createLaunchIntent(this, user);
-        startActivity(intent);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, transView, "profile");
+        startActivity(intent, options.toBundle());
     }
 
     /**

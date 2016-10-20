@@ -129,7 +129,7 @@ public final class UserActivity extends AppCompatActivity {
         boolean val = false;
         switch (item.getItemId()) {
         case android.R.id.home:
-            finish();
+            supportFinishAfterTransition();
             val = true;
             break;
         default:

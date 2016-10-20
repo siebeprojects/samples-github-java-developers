@@ -193,11 +193,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
      * 
      * @param position
      */
-    private void handleOnClick(int position) {
+    private void handleOnClick(int position, View transView) {
 
         if (listener != null) {
             User user = items.get(position);
-            listener.onItemClick(user, position);
+            listener.onItemClick(user, position, transView);
         }
     }
 
@@ -211,8 +211,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
          * 
          * @param itemView 
          * @param position 
+         * @param view The ImageView for transition
          */
-        void onItemClick(User user, int position);
+        void onItemClick(User user, int position, View view);
     }
 
     /**
@@ -243,10 +244,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             initials = (TextView) row.findViewById(R.id.text_initials);
             avatar = (ImageView) row.findViewById(R.id.image_avatar);
 
+            final View transView = avatar;
+
             row.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        handleOnClick(getAdapterPosition());
+                        handleOnClick(getAdapterPosition(), transView);
                     }
                 });
         }
