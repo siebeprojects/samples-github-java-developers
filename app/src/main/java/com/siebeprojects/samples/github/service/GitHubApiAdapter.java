@@ -86,4 +86,34 @@ public class GitHubApiAdapter {
     public Observable<SearchResult> searchUsers(String query, int perPage, int page) {
         return service.searchUsers(query, perPage, page);
     }
+
+    /** 
+     * Get user details for each user
+     * 
+     * @param query 
+     * @param perPage
+     * @param page 
+     * 
+     * @return The Observable with a list of users  
+     */
+    public Observable<List<User>> getUserDetails(List<User> users) {
+
+        return Observable.from(users).flatMap(new Func1<User, Observable<User>>() {
+                @Override
+                public Observable<User> call(User user) {
+                    return service.getUser(user.getLogin());
+                }
+            }).toList();
+    }
+
+    /** 
+     * Get the user given the name
+     * 
+     * @param name
+     * 
+     * @return The Observable with the user 
+     */
+    public Observable<User> getUser(User user) {
+        return service.searchUsers(query, perPage, page);
+    }
 }

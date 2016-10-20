@@ -64,12 +64,6 @@ public class UsersPresenter {
         
         Observable<SearchResult> result = adapter.searchUsers(GitHubApiAdapter.QUERY_JAVA_DEVELOPERS, 10, 1);
 
-        // retrofit + rxjava 
-        // Observable should already have a thread attached to it.
-        // Compositive subscription to close all at the same time.
-
-        // Retrofit does the 
-
         result.subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Subscriber<SearchResult>() {
@@ -91,16 +85,50 @@ public class UsersPresenter {
     }
 
     /** 
-     * Handle the search result
+     * Handle the search result, load all user details for 
+     * the search result. 
      * 
-     * @param result The search result
+     * @param searchResult The search result with users
      */
-    private void handleSearchResult(SearchResult result) {
+    private void handleSearchResult(SearchResult searchResult) {
         
-        adapter.clear();
         List<User> users = result.getItems();
-        adapter.addItems(users);
+
+        Observable<SearchResult> result = adapter.getUserDetails(users);
+
+        result.subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Subscriber<SearchResult>() {
+
+                    @Override
+                        public void onCompleted() {
+                    }
+                    
+                    @Override
+                        public void onError(Throwable e) {
+                        Log.i(TAG, "onError: " + e);
+                    }
+
+                    @Override
+                        public void onNext(SearchResult result) {
+                        handleSearchResult(result);
+                    }
+                    });
     }
+
+
+        Observable<List<User>) ur = 
+        
+    }
+
+
+    /** 
+     * 
+     * 
+     */
+    private void handleDetailedResult(List<User> users) {
+    }
+
 
     /** 
      * Stop this presenter
