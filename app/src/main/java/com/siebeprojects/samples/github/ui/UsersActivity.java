@@ -69,7 +69,6 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
     public void onPause() {
         super.onPause();
         paused = true;
-        adapter.setListener(null);
     }
 
     /**
@@ -79,9 +78,7 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
     public void onResume() {
         super.onResume();
         paused = false;
-
-        adapter.setListener(this);
-        presenter.loadUsers();
+        presenter.loadFirstPage();
     }
 
     /**
@@ -99,6 +96,14 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
     public void onItemClick(User user, int position) {
     }
 
+    /** 
+     * Is the activity paused
+     * 
+     * @return true when paused, false otherwise 
+     */
+    public boolean isPaused() {
+        return paused;
+    }
 
     /**
      * Show the user detail activity

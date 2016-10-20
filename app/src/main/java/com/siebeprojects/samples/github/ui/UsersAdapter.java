@@ -90,9 +90,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         // Get the data model based on position
         User user = items.get(position);
 
-        holder.name.setText(user.getName());
+        holder.name.setText(user.getLogin());
         holder.description.setText(user.getCreatedAt());
-        holder.initials.setText(getInitials(user.getName()));
+        holder.initials.setText(getInitials(user.getLogin()));
 
         String url = user.getAvatarUrl();
         if (TextUtils.isEmpty(url)) {
@@ -154,6 +154,17 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
      */
     public void addItems(List<User> newItems) {
         items.addAll(newItems);
+        notifyDataSetChanged();
+    }
+
+    /** 
+     * Add new items in this adapter.
+     *
+     * @param newItems 
+     */
+    public void addItem(User newItem) {
+        items.add(newItem);
+        notifyDataSetChanged();
     }
 
     /** 

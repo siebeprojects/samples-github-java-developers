@@ -22,6 +22,7 @@ import com.siebeprojects.samples.github.model.SearchResult;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import retrofit2.http.Path;
 
 import rx.Observable;
 
