@@ -20,8 +20,12 @@ package com.siebeprojects.samples.github.user;
 import android.content.Context;
 import android.content.Intent;
 
+import android.view.KeyEvent;
+import android.view.MenuItem;
+
 import android.util.Log;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.siebeprojects.samples.github.R;
@@ -73,6 +77,9 @@ public final class UserActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
+        initToolbar();
+
         presenter = new UserPresenter(this);
 
         // get the conversation id value
@@ -84,6 +91,8 @@ public final class UserActivity extends AppCompatActivity {
             this.login = intent.getStringExtra(EXTRA_LOGIN);            
             this.avatarUrl = intent.getStringExtra(EXTRA_AVATAR_URL);
         }
+
+        
         presenter = new UserPresenter(this);
     }
 
@@ -106,6 +115,24 @@ public final class UserActivity extends AppCompatActivity {
         presenter.loadUser(login);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        boolean val = false;
+        switch (item.getItemId()) {
+        case android.R.id.home:
+            finish();
+            val = true;
+            break;
+        default:
+            val = super.onOptionsItemSelected(item);
+        }
+        return val;
+    }
+
     /** 
      * Is the activity paused
      * 
@@ -123,4 +150,19 @@ public final class UserActivity extends AppCompatActivity {
     public void setUser(User user) {
         Log.i(TAG, "setUser: " + user);
     }
+
+    /** 
+     * 
+     * 
+     */
+    private void initToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("foo foo");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+
+
 }
