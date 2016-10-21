@@ -1,31 +1,11 @@
-# 1. Create a new project
+# Release notes
 
-# 2. When opening the app, show a list of all Java developers. 
-Use the [Github API](https://developer.github.com/v3/) to get the users
+## Release notes version 1.0.0
 
-* The UI should match the Google Material Design Guidelines
+A sample app loading Java Developers from the GitHub V3 API.
+This example uses the following libraries:
 
-* Load maximum 10 users at once.
-
-Each user item should contain at least:
-* username
-* avatar
-* registration date
-
-bonus: order by username
-
-# 3. Show a more detailed screen of the user, when you click on a user item.
-
-* Feel free to add any details you want. 
-* A mandatory detail is the email address.
-* Number of followers
-* When clicking on the email address, the default email app, installed on the device should open up.
-* The detailed screen should be opened with a transition. The avatar should animate from a small icon (left aligned) in the list to a big icon centered in the detailed view
-* (bonus) implement ElasticDragDismissView (Like in the plaid exampel app https://play.google.com/store/apps/details?id=io.plaidapp&hl=de) for the detailed view.  
-
-
-### Upload your code to this repository, how you would do it in a real project.
-
-***We encourage you to use third party libraries, if you need them.***
-
-*Happy Coding!*
+* Glide (Image loading)
+* Retrofit2 (Loading content from GitHub API)
+* RXJava (Threading for loading content)
+* JP Wasabeef Glide Transformations (Image manipulations)
