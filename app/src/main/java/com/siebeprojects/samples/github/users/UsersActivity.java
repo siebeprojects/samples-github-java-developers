@@ -27,6 +27,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.design.widget.Snackbar;
 
 import com.siebeprojects.samples.github.R;
 import com.siebeprojects.samples.github.model.User;
@@ -107,7 +108,7 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
     @Override
     public void onItemClick(User user, int position, View transView) {
         Intent intent = UserActivity.createLaunchIntent(this, user);
-
+        
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, transView, "profile");
         startActivity(intent, options.toBundle());
     }
@@ -138,4 +139,14 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
     public boolean isPaused() {
         return paused;
     }
+
+    /** 
+     * Show a request error to the user
+     */
+    void showRequestError() {
+        View view = findViewById(R.id.layout_activity);
+        Snackbar snackbar = Snackbar.make(view, R.string.error_request, Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+
 }

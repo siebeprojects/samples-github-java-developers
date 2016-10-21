@@ -96,12 +96,11 @@ public class UsersPresenter {
      * @param page 
      */
     private void setLoading(boolean loading) {
-        
+
         this.loading = loading;
-        if (loading && adapter.getItemCount() == 0) {
-            activity.showLoading(true);
-        } else {
-            activity.showLoading(false);
+
+        if (!activity.isPaused()) {
+            activity.showLoading(loading && adapter.getItemCount() == 0);
         }
     }
 
@@ -124,13 +123,13 @@ public class UsersPresenter {
 
                     @Override
                     public void onCompleted() {
+                        // comment this line of loading user details
                         setLoading(false);
                     }
                     
                     @Override
                         public void onError(Throwable e) {
-                        setLoading(false);
-                        Log.i(TAG, "onError: " + e);
+                        handleRequestError(e);
                     }
 
                     @Override
@@ -138,6 +137,19 @@ public class UsersPresenter {
                         handleSearchResult(result);
                     }
                     });
+    }
+
+    /** 
+     * Handle the network error situation
+     * 
+     * @param e The Throwable causing the error
+     */
+    private void handleRequestError(Throwable e) {
+        setLoading(false);
+
+        if (!activity.isPaused()) {
+            activity.showRequestError();
+        }
     }
 
     /** 
@@ -154,6 +166,13 @@ public class UsersPresenter {
             return;
         }
         List<User> users = searchResult.getItems();
+
+        // Uncomment this method if loading of user details is needed. If using this method then
+        // comment the setLoading(false) in the loadPage() method in the onCompleted.
+        //loadUserDetails(users);
+        
+        // Comment this line if using the loadUserDetails(users);
+        // If using this method, please uncomment the setLoading(false) in the loadPage() method.
         addUsersToList(users);
 
         updatePagination(searchResult.getTotalCount(), adapter.getItemCount());
@@ -181,7 +200,7 @@ public class UsersPresenter {
 
     /** 
      * Load the user details for each user object. The rate limit of GitHub does not allow
-     * to load user details often and thus has been disabled.
+     * to load user details often and thus has been disabled. 
      * 
      * @param users The list of users for which user details should be loaded.
      */
@@ -201,8 +220,7 @@ public class UsersPresenter {
                     
                     @Override
                     public void onError(Throwable e) {
-                        setLoading(false);
-                        Log.i(TAG, "onError: " + e);
+                        handleRequestError(e);
                     }
 
                     @Override

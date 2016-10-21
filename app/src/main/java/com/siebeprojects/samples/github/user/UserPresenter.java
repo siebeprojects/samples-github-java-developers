@@ -58,7 +58,7 @@ public class UserPresenter {
         if (loading) {
             return;
         }
-        loading = true;
+        setLoading(true);
 
         GitHubApiAdapter adapter = GitHubApiAdapter.getInstance();
         Observable<User> result = adapter.getUser(userName);
@@ -69,13 +69,12 @@ public class UserPresenter {
 
                     @Override
                     public void onCompleted() {
-                        loading = false;
+                        setLoading(false);
                     }
                     
                     @Override
                         public void onError(Throwable e) {
-                        loading = false;
-                        Log.i(TAG, "onError: " + e);
+                        handleRequestError(e);
                     }
 
                     @Override
@@ -83,6 +82,28 @@ public class UserPresenter {
                         handleUserResult(user);
                     }
                     });
+    }
+
+    /** 
+     * Set the loading state
+     *
+     * @param loading true when loading, false otherwise
+     */
+    private void setLoading(boolean loading) {
+        this.loading = loading;
+    }
+
+    /** 
+     * Handle the network error situation
+     * 
+     * @param e The Throwable causing the error
+     */
+    private void handleRequestError(Throwable e) {
+
+        setLoading(false);
+        if (!activity.isPaused()) {
+            activity.showRequestError();
+        }
     }
 
     /** 

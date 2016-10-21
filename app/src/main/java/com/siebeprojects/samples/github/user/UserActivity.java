@@ -31,6 +31,9 @@ import android.util.Log;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 
 import com.bumptech.glide.Glide; 
 import jp.wasabeef.glide.transformations.BlurTransformation;
@@ -143,7 +146,7 @@ public final class UserActivity extends AppCompatActivity {
      * 
      * @return true when paused, false otherwise 
      */
-    public boolean isPaused() {
+    boolean isPaused() {
         return paused;
     }
 
@@ -152,7 +155,7 @@ public final class UserActivity extends AppCompatActivity {
      * 
      * @param user The user to update
      */
-    public void setUser(User user) {
+    void setUser(User user) {
 
         TextView tv = (TextView)findViewById(R.id.text_name);
         tv.setText(user.getName());
@@ -168,8 +171,19 @@ public final class UserActivity extends AppCompatActivity {
     }
 
     /** 
+     * Show a request error to the user
+     */
+    void showRequestError() {
+        
+        CoordinatorLayout layout = (CoordinatorLayout)findViewById(R.id.layout_coordinator);
+        Snackbar snackbar = Snackbar.make(layout, R.string.error_request, Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+
+    /** 
+     * Set the avatar
      * 
-     * 
+     * @param avatarUrl 
      */
     @SuppressWarnings("unchecked")
     private void setAvatar(String avatarUrl) {

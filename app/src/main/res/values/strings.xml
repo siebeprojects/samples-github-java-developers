@@ -8,4 +8,6 @@
     <string name="label_followers">Followers:</string>
     <string name="label_createdat">Joined at:</string>
 
+    <string name="error_request">Oops we failed loading from GitHub, check your internet or GitHub rate limit.</string>
+
 </resources>
