@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <string name="app_name">KeyboardHeight</string>
-    <string name="info">CLick the back button to close the keyboard, click the EditText to open it again.</string>
-    <string name="height">Keyboard height (pixels):</string>
+    <string name="app_name">Java Developers</string>
+
+    <string name="label_name">Name:</string>
+    <string name="label_email">Email:</string>
+    <string name="label_followers">Followers:</string>
+    <string name="label_createdat">Joined at:</string>
+
+    <string name="error_request">Oops we failed loading from GitHub, check your internet or GitHub rate limit.</string>
+
 </resources>
