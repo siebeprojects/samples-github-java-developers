@@ -37,3 +37,4 @@ public interface GitHubService {
     @GET("users/{login}")
     Observable<User> getUser(@Path("login") String login);
 }
+ 
