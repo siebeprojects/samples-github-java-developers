@@ -38,6 +38,9 @@ import com.siebeprojects.samples.github.util.ThresholdOnScrollListener;
  */
 public final class UsersActivity extends AppCompatActivity implements UsersAdapter.OnItemClickListener, ThresholdListener {
 
+    /** The key for animating the profile */
+    private final static String KEY_PROFILE     = "profile";
+    
     /** The scrolling threshold before new items should be loaded */
     private final static int SCROLL_THRESHOLD   = 5;
 
@@ -105,7 +108,7 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
     public void onItemClick(User user, int position, View transView) {
         Intent intent = UserActivity.createLaunchIntent(this, user);
         
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, transView, "profile");
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, transView, KEY_PROFILE);
         startActivity(intent, options.toBundle());
     }
 
