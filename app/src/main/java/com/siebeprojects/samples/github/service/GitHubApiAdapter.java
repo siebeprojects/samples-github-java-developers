@@ -17,6 +17,8 @@
 
 package com.siebeprojects.samples.github.service;
 
+import java.util.List;
+
 import com.siebeprojects.samples.github.model.User;
 import com.siebeprojects.samples.github.model.SearchResult;
 
@@ -24,6 +26,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
+import rx.functions.Func1;
 
 /**
  * GitHubApiAdapter 
@@ -85,5 +88,55 @@ public class GitHubApiAdapter {
      */
     public Observable<SearchResult> searchUsers(String query, int perPage, int page) {
         return service.searchUsers(query, perPage, page);
+    }
+
+    /** 
+     * Get user details for each user and return the users as a list
+     * 
+     * @param query 
+     * @param perPage
+     * @param page 
+     * 
+     * @return The Observable with a list of users
+     */
+    public Observable<List<User>> getUserDetailsAsList(List<User> users) {
+
+        return Observable.from(users).concatMap(new Func1<User, Observable<User>>() {
+                @Override
+                public Observable<User> call(User user) {
+                    return service.getUser(user.getLogin());
+                }
+            }).toList();
+    }
+
+    /** 
+     * Get user details for each user, the users will be emitted 
+     * one by one.
+     *
+     * @param query 
+     * @param perPage
+     * @param page 
+     * 
+     * @return The Observable with a list of users  
+     */
+    public Observable<User> getUserDetails(List<User> users) {
+
+        return Observable.from(users).concatMap(new Func1<User, Observable<User>>() {
+                @Override
+                public Observable<User> call(User user) {
+                    return service.getUser(user.getLogin());
+                }
+            });
+    }
+
+    /** 
+     * Get the user given the name
+     * 
+     * @param login The login name of the user
+     * 
+     * @return The Observable with the user 
+     */
+    public Observable<User> getUser(String login) {
+        return service.getUser(login);
     }
 }

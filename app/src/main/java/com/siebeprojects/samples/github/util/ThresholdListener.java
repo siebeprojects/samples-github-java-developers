@@ -15,25 +15,17 @@
  * along with Siebe Projects samples.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.siebeprojects.samples.github.service;
-
-import com.siebeprojects.samples.github.model.User;
-import com.siebeprojects.samples.github.model.SearchResult;
-
-import retrofit2.http.GET;
-import retrofit2.http.Query;
-import retrofit2.http.Path;
-
-import rx.Observable;
+package com.siebeprojects.samples.github.util;
 
 /**
- * The GitHub Service defining the calls to the GitHub API
+ * This listener will be notified when the user has scrolled 
+ * the list and there are only a few elements left to scroll.
  */
-public interface GitHubService {
+public interface ThresholdListener {
 
-    @GET("/search/users")
-    Observable<SearchResult> searchUsers(@Query("q") String query, @Query("per_page") int perPage, @Query("page") int page);
-
-    @GET("users/{login}")
-    Observable<User> getUser(@Path("login") String login);
+    /** 
+     * Called when the list has scrolled down and the 
+     * there are only a few (threshold) elements not visible anymore.
+     */
+    void onThresholdReached();
 }

@@ -15,7 +15,7 @@
  * along with Siebe Projects samples.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.siebeprojects.samples.github.ui;
+package com.siebeprojects.samples.github.users;
 
 import android.content.Context;
 
@@ -38,15 +38,15 @@ import com.siebeprojects.samples.github.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
-
+import com.siebeprojects.samples.github.util.CropCircleTransformation;
+import com.siebeprojects.samples.github.util.AppUtils;
 
 /**
  *
  */
-public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
+final class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
 
-    private final static String TAG = "sample_UsersAdapter";
+    private final static String TAG = "samples_UsersAdapter";
 
     /** The list of users */
     private List<User> items;
@@ -60,9 +60,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     /** 
      * Create a new UsersAdapter
      * 
-     * @param context 
+     * @param activity
      */
-    public UsersAdapter(UsersActivity activity) {
+    UsersAdapter(UsersActivity activity) {
         this.items = new ArrayList<User>();
         this.activity = activity;
     }
@@ -89,10 +89,22 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
         // Get the data model based on position
         User user = items.get(position);
+        
+        String name = user.getName();
+        String createdAt = user.getCreatedAt();
 
-        holder.name.setText(user.getName());
-        holder.description.setText(user.getCreatedAt());
-        holder.initials.setText(getInitials(user.getName()));
+        // set the name field 
+        if (TextUtils.isEmpty(name)) {
+            name = user.getLogin();
+        }
+        holder.name.setText(name);
+
+        // set the description field 
+        holder.description.setText(AppUtils.getSimpleDateString(activity, createdAt));
+        holder.description.setVisibility(TextUtils.isEmpty(createdAt) ? View.GONE : View.VISIBLE);
+
+        // set the avatar fields with initials
+        holder.initials.setText(getInitials(name));
 
         String url = user.getAvatarUrl();
         if (TextUtils.isEmpty(url)) {
@@ -109,7 +121,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
      * 
      * @param listener
      */
-    public void setListener(OnItemClickListener listener) {
+    void setListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -142,7 +154,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     /**
      * Clear the list of users
      */
-    public void clear() {
+    void clear() {
         items.clear();
         notifyDataSetChanged();
     }
@@ -152,21 +164,28 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
      *
      * @param newItems 
      */
-    public void addItems(List<User> newItems) {
+    void addItems(List<User> newItems) {
         items.addAll(newItems);
+        notifyDataSetChanged();
     }
 
     /** 
+     * Add new items in this adapter.
+     *
+     * @param newItem
+     */
+    public void addItem(User newItem) {
+        items.add(newItem);
+        notifyDataSetChanged();
+    }
+
+    /** 
+     * Get the initials given the name of the user
      * 
-     * 
-     * @param position 
+     * @param name
      */
     private String getInitials(String name) {
-        if (TextUtils.isEmpty(name)) {
-            return "";
-        } else {
-            return name.substring(0, 1).toUpperCase();
-        }
+        return (TextUtils.isEmpty(name)) ? "" : name.substring(0, 1).toUpperCase();
     }
 
 
@@ -175,41 +194,33 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
      * 
      * @param position
      */
-    private void handleOnClick(int position) {
+    private void handleOnClick(int position, View transView) {
 
         if (listener != null) {
             User user = items.get(position);
-            listener.onItemClick(user, position);
+            listener.onItemClick(user, position, transView);
         }
-    }
-
-    /** 
-     * 
-     * 
-     * @param url 
-     * @param imageView The image view to use 
-     */
-    private void setAvatar(String url, ImageView imageView) {
     }
 
     /** 
      * The click listener informing a user has been clicked
      */
-    public interface OnItemClickListener {
+    interface OnItemClickListener {
 
         /** 
          * Called when a user has been clicked
          * 
-         * @param itemView 
+         * @param user
          * @param position 
+         * @param view The ImageView for transition
          */
-        void onItemClick(User user, int position);
+        void onItemClick(User user, int position, View view);
     }
 
     /**
      *
      */
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         /** */
         TextView name;
@@ -220,13 +231,13 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         /** */
         TextView initials;
 
-        /** The avatar image view */
+        /**  */
         ImageView avatar;
 
         /**
          *
          */
-        public ViewHolder(View row) {
+        ViewHolder(View row) {
             super(row);
 
             name = (TextView) row.findViewById(R.id.text_name);
@@ -234,10 +245,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             initials = (TextView) row.findViewById(R.id.text_initials);
             avatar = (ImageView) row.findViewById(R.id.image_avatar);
 
+            final View transView = avatar;
+
             row.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        handleOnClick(getAdapterPosition());
+                        handleOnClick(getAdapterPosition(), transView);
                     }
                 });
         }
