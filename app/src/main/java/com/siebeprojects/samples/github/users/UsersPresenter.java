@@ -34,11 +34,11 @@ import rx.schedulers.Schedulers;
  * UsersPresenter responsible for loading and updating the adapter
  * with new users.
  */
-public class UsersPresenter {
+final class UsersPresenter {
 
-    public final static String TAG      = "samples_UsersPresenter";
+    private final static String TAG      = "samples_UsersPresenter";
 
-    public final static int PER_PAGE    = 10;
+    private final static int PER_PAGE    = 10;
 
     /** The users activity */
     private UsersActivity activity;
@@ -70,7 +70,7 @@ public class UsersPresenter {
     /** 
      * Load the users from the storage
      */
-    public void loadFirstPage() {
+    void loadFirstPage() {
 
         if (loading || curPage != 0) {
             return;
@@ -81,7 +81,7 @@ public class UsersPresenter {
     /**
      * Load the users from the storage
      */
-    public void loadNextPage() {
+    void loadNextPage() {
 
         if (loading || curPage == nextPage) {
             return;
@@ -93,7 +93,7 @@ public class UsersPresenter {
      * Set loading and inform the activity to show the loading
      * animation.
      *
-     * @param page 
+     * @param loading
      */
     private void setLoading(boolean loading) {
 

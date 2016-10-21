@@ -18,20 +18,16 @@
 package com.siebeprojects.samples.github.users;
 
 import android.content.Intent;
-import android.util.Log;
-
 import android.os.Bundle;
-import android.view.View;
-
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.design.widget.Snackbar;
+import android.view.View;
 
 import com.siebeprojects.samples.github.R;
 import com.siebeprojects.samples.github.model.User;
-
 import com.siebeprojects.samples.github.user.UserActivity;
 import com.siebeprojects.samples.github.util.ThresholdListener;
 import com.siebeprojects.samples.github.util.ThresholdOnScrollListener;
@@ -126,7 +122,7 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
      * 
      * @return true when shown, false otherwise 
      */
-    public void showLoading(boolean show) {
+    void showLoading(boolean show) {
         View v = findViewById(R.id.progressbar);
         v.setVisibility(show ? View.VISIBLE : View.GONE);
     }
@@ -136,7 +132,7 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
      * 
      * @return true when paused, false otherwise 
      */
-    public boolean isPaused() {
+    boolean isPaused() {
         return paused;
     }
 

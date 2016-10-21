@@ -19,30 +19,24 @@ package com.siebeprojects.samples.github.user;
 
 import android.content.Context;
 import android.content.Intent;
-
+import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.View;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import android.util.Log;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-
-import com.bumptech.glide.Glide; 
-import jp.wasabeef.glide.transformations.BlurTransformation;
-import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation;
-import com.siebeprojects.samples.github.util.CropCircleTransformation;
-
+import com.bumptech.glide.Glide;
 import com.siebeprojects.samples.github.R;
 import com.siebeprojects.samples.github.model.User;
 import com.siebeprojects.samples.github.util.AppUtils;
+import com.siebeprojects.samples.github.util.CropCircleTransformation;
+
+import jp.wasabeef.glide.transformations.BlurTransformation;
+import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation;
 
 /**
  * The user details activity.

@@ -30,7 +30,7 @@ import rx.schedulers.Schedulers;
 /**
  * UserPresenter responsible for loading the details of the given user.
  */
-public class UserPresenter {
+final class UserPresenter {
 
     public final static String TAG      = "samples_UserPresenter";
 
@@ -44,7 +44,6 @@ public class UserPresenter {
      * Create a new UserPresenter
      * 
      * @param activity The UsersActivity
-     * @param adapter The adapter holding the elements
      */
     UserPresenter(UserActivity activity) {
         this.activity = activity;
@@ -53,7 +52,7 @@ public class UserPresenter {
     /** 
      * Load the users from the storage
      */
-    public void loadUser(String userName) {
+    void loadUser(String userName) {
 
         if (loading) {
             return;

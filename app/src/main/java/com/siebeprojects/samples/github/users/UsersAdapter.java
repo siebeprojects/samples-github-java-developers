@@ -44,7 +44,7 @@ import com.siebeprojects.samples.github.util.AppUtils;
 /**
  *
  */
-public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
+final class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
 
     private final static String TAG = "samples_UsersAdapter";
 
@@ -60,9 +60,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     /** 
      * Create a new UsersAdapter
      * 
-     * @param context 
+     * @param activity
      */
-    public UsersAdapter(UsersActivity activity) {
+    UsersAdapter(UsersActivity activity) {
         this.items = new ArrayList<User>();
         this.activity = activity;
     }
@@ -121,7 +121,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
      * 
      * @param listener
      */
-    public void setListener(OnItemClickListener listener) {
+    void setListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -154,7 +154,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     /**
      * Clear the list of users
      */
-    public void clear() {
+    void clear() {
         items.clear();
         notifyDataSetChanged();
     }
@@ -164,7 +164,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
      *
      * @param newItems 
      */
-    public void addItems(List<User> newItems) {
+    void addItems(List<User> newItems) {
         items.addAll(newItems);
         notifyDataSetChanged();
     }
@@ -172,7 +172,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     /** 
      * Add new items in this adapter.
      *
-     * @param newItems 
+     * @param newItem
      */
     public void addItem(User newItem) {
         items.add(newItem);
@@ -182,7 +182,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     /** 
      * Get the initials given the name of the user
      * 
-     * @param position 
+     * @param name
      */
     private String getInitials(String name) {
         return (TextUtils.isEmpty(name)) ? "" : name.substring(0, 1).toUpperCase();
@@ -205,12 +205,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     /** 
      * The click listener informing a user has been clicked
      */
-    public interface OnItemClickListener {
+    interface OnItemClickListener {
 
         /** 
          * Called when a user has been clicked
          * 
-         * @param itemView 
+         * @param user
          * @param position 
          * @param view The ImageView for transition
          */
@@ -220,7 +220,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     /**
      *
      */
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         /** */
         TextView name;
@@ -237,7 +237,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         /**
          *
          */
-        public ViewHolder(View row) {
+        ViewHolder(View row) {
             super(row);
 
             name = (TextView) row.findViewById(R.id.text_name);
