@@ -51,8 +51,10 @@ final class UserPresenter {
 
     /** 
      * Load the users from the storage
+     *
+     * @param login The login name of the user
      */
-    void loadUser(String userName) {
+    void loadUser(String login) {
 
         if (loading) {
             return;
@@ -60,7 +62,7 @@ final class UserPresenter {
         setLoading(true);
 
         GitHubApiAdapter adapter = GitHubApiAdapter.getInstance();
-        Observable<User> result = adapter.getUser(userName);
+        Observable<User> result = adapter.getUser(login);
 
         result.subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
@@ -98,7 +100,7 @@ final class UserPresenter {
      * @param e The Throwable causing the error
      */
     private void handleRequestError(Throwable e) {
-
+        Log.i(TAG, "Error loading data: " + e.toString());
         setLoading(false);
         if (!activity.isPaused()) {
             activity.showRequestError();

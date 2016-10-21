@@ -145,8 +145,9 @@ final class UsersPresenter {
      * @param e The Throwable causing the error
      */
     private void handleRequestError(Throwable e) {
-        setLoading(false);
 
+        Log.i(TAG, "Error loading data: " + e.toString());
+        setLoading(false);
         if (!activity.isPaused()) {
             activity.showRequestError();
         }
