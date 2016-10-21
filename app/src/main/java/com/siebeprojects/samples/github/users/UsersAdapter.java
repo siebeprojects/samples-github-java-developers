@@ -223,16 +223,16 @@ final class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder {
 
         /** */
-        TextView name;
+        final TextView name;
 
         /** */
-        TextView description;
+        final TextView description;
 
         /** */
-        TextView initials;
+        final TextView initials;
 
         /**  */
-        ImageView avatar;
+        final ImageView avatar;
 
         /**
          *
@@ -245,12 +245,10 @@ final class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
             initials = (TextView) row.findViewById(R.id.text_initials);
             avatar = (ImageView) row.findViewById(R.id.image_avatar);
 
-            final View transView = avatar;
-
             row.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        handleOnClick(getAdapterPosition(), transView);
+                        handleOnClick(getAdapterPosition(), avatar);
                     }
                 });
         }
