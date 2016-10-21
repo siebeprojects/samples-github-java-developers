@@ -90,6 +90,22 @@ public class UsersPresenter {
     }
 
     /** 
+     * Set loading and inform the activity to show the loading
+     * animation.
+     *
+     * @param page 
+     */
+    private void setLoading(boolean loading) {
+        
+        this.loading = loading;
+        if (loading && adapter.getItemCount() == 0) {
+            activity.showLoading(true);
+        } else {
+            activity.showLoading(false);
+        }
+    }
+
+    /** 
      * Load the page with the given number
      * 
      * @param page The page to be loaded
@@ -97,7 +113,7 @@ public class UsersPresenter {
     private void loadPage(int page) {
 
         // Currently loading a page
-        loading = true;
+        setLoading(true);
 
         GitHubApiAdapter adapter = GitHubApiAdapter.getInstance();
         Observable<SearchResult> result = adapter.searchUsers(GitHubApiAdapter.QUERY_JAVA_DEVELOPERS, PER_PAGE, page);
@@ -108,12 +124,12 @@ public class UsersPresenter {
 
                     @Override
                     public void onCompleted() {
-                        loading = false;
+                        setLoading(false);
                     }
                     
                     @Override
                         public void onError(Throwable e) {
-                        loading = false;
+                        setLoading(false);
                         Log.i(TAG, "onError: " + e);
                     }
 
@@ -180,12 +196,12 @@ public class UsersPresenter {
 
                     @Override
                     public void onCompleted() {
-                        loading = false;
+                        setLoading(false);
                     }
                     
                     @Override
                     public void onError(Throwable e) {
-                        loading = false;
+                        setLoading(false);
                         Log.i(TAG, "onError: " + e);
                     }
 

@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import android.text.TextUtils;
+import android.view.View;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -86,7 +87,6 @@ public final class UserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
-        // get the conversation id value
         if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_LOGIN)) {
             this.login = savedInstanceState.getString(EXTRA_LOGIN);
             this.avatarUrl = savedInstanceState.getString(EXTRA_AVATAR_URL);

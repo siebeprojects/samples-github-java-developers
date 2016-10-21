@@ -19,6 +19,7 @@ package com.siebeprojects.samples.github.users;
 
 import android.content.Intent;
 import android.util.Log;
+
 import android.os.Bundle;
 import android.view.View;
 
@@ -117,6 +118,16 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
     @Override
     public void onThresholdReached() {
         presenter.loadNextPage();
+    }
+
+    /** 
+     * Show the loading animation or not
+     * 
+     * @return true when shown, false otherwise 
+     */
+    public void showLoading(boolean show) {
+        View v = findViewById(R.id.progressbar);
+        v.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     /** 

@@ -678,16 +678,4 @@ public class User {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
-
-    /**
-     * Get the initials for this space
-     *
-     */
-    public String getInitials() {
-        if (TextUtils.isEmpty(name)) {
-            return "";
-        } else {
-            return name.substring(0, 1);
-        }
-    }
 }
