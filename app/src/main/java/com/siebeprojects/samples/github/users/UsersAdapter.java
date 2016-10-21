@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.siebeprojects.samples.github.util.CropCircleTransformation;
+import com.siebeprojects.samples.github.util.AppUtils;
 
 /**
  *
@@ -99,7 +100,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         holder.name.setText(name);
 
         // set the description field 
-        holder.description.setText(createdAt);
+        holder.description.setText(AppUtils.getSimpleDateString(activity, createdAt));
         holder.description.setVisibility(TextUtils.isEmpty(createdAt) ? View.GONE : View.VISIBLE);
 
         // set the avatar fields with initials

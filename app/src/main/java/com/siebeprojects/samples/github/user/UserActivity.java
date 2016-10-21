@@ -42,6 +42,7 @@ import com.siebeprojects.samples.github.util.CropCircleTransformation;
 
 import com.siebeprojects.samples.github.R;
 import com.siebeprojects.samples.github.model.User;
+import com.siebeprojects.samples.github.util.AppUtils;
 
 /**
  * The user details activity.
@@ -165,9 +166,9 @@ public final class UserActivity extends AppCompatActivity {
 
         tv = (TextView)findViewById(R.id.text_followers);
         tv.setText(Integer.toString(user.getFollowers()));
-        
+
         tv = (TextView)findViewById(R.id.text_createdat);
-        tv.setText(user.getCreatedAt());
+        tv.setText(AppUtils.getSimpleDateString(this, user.getCreatedAt()));
     }
 
     /** 
