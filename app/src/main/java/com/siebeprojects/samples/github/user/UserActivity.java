@@ -123,6 +123,17 @@ public final class UserActivity extends AppCompatActivity {
      * {@inheritDoc}
      */
     @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putString(EXTRA_LOGIN, this.login);
+        savedInstanceState.putString(EXTRA_AVATAR_URL, this.avatarUrl);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         boolean val = false;
         switch (item.getItemId()) {
