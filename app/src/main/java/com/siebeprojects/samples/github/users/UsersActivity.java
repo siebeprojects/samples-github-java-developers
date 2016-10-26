@@ -38,9 +38,9 @@ import com.siebeprojects.samples.github.util.ThresholdOnScrollListener;
  */
 public final class UsersActivity extends AppCompatActivity implements UsersAdapter.OnItemClickListener, ThresholdListener {
 
-    /** The key for animating the profile */
-    private final static String KEY_PROFILE     = "profile";
-    
+    /** Key for animating the avatar profile */
+    private final static String KEY_PROFILE      = "profile";
+
     /** The scrolling threshold before new items should be loaded */
     private final static int SCROLL_THRESHOLD   = 5;
 
@@ -122,8 +122,6 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
 
     /** 
      * Show the loading animation or not
-     * 
-     * @return true when shown, false otherwise 
      */
     void showLoading(boolean show) {
         View v = findViewById(R.id.progressbar);

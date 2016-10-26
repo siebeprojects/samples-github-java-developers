@@ -54,7 +54,10 @@ final class UsersPresenter {
 
     /** Is the presenter currently loading a page */
     private boolean loading;
-    
+
+    /** Should details be loaded for each item */
+    private boolean loadDetails;
+
     /** 
      * Create a new UsersPresenter
      * 
@@ -65,6 +68,9 @@ final class UsersPresenter {
         this.activity = activity;
         this.adapter  = adapter;
         this.nextPage = 1;
+
+        // REMIND: enable this if details loading should be activated
+        //this.loadDetails = true;
     }
 
     /** 
@@ -92,8 +98,6 @@ final class UsersPresenter {
     /** 
      * Set loading and inform the activity to show the loading
      * animation.
-     *
-     * @param loading
      */
     private void setLoading(boolean loading) {
 
@@ -123,8 +127,10 @@ final class UsersPresenter {
 
                     @Override
                     public void onCompleted() {
-                        // comment this line of loading user details
-                        setLoading(false);
+                        // comment this line if loading user details
+                        if (!loadDetails) {
+                            setLoading(false);
+                        }
                     }
                     
                     @Override
@@ -168,14 +174,11 @@ final class UsersPresenter {
         }
         List<User> users = searchResult.getItems();
 
-        // Uncomment this method if loading of user details is needed. If using this method then
-        // comment the setLoading(false) in the loadPage() method in the onCompleted.
-        //loadUserDetails(users);
-        
-        // Comment this line if using the loadUserDetails(users);
-        // If using this method, please uncomment the setLoading(false) in the loadPage() method.
-        addUsersToList(users);
-
+        if (loadDetails) {
+            loadUserDetails(users);
+        } else {
+            addUsersToList(users);
+        }
         updatePagination(searchResult.getTotalCount(), adapter.getItemCount());
     }
 
