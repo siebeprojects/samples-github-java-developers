@@ -80,14 +80,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/SampleText.Medium.Gray"
+                style="@style/SampleText.Small.Third"
                 android:text="@string/label_name"/>
 
             <TextView
                 android:id="@+id/text_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/SampleText.Large" />
+                style="@style/SampleText.Medium" />
 
             <View
                 style="@style/SampleLine"
@@ -98,7 +98,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/SampleText.Medium.Gray"
+                style="@style/SampleText.Small.Third"
                 android:text="@string/label_email"/>
 
             <TextView
@@ -106,7 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="email" 
-                style="@style/SampleText.Large" />
+                style="@style/SampleText.Medium" />
 
             <View
                 style="@style/SampleLine"
@@ -117,14 +117,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/SampleText.Medium.Gray"
+                style="@style/SampleText.Small.Third"
                 android:text="@string/label_followers"/>
 
             <TextView
                 android:id="@+id/text_followers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/SampleText.Large" />
+                style="@style/SampleText.Medium" />
 
             <View
                 style="@style/SampleLine"
@@ -135,14 +135,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/SampleText.Medium.Gray"
+                style="@style/SampleText.Small.Third"
                 android:text="@string/label_createdat"/>
 
             <TextView
                 android:id="@+id/text_createdat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/SampleText.Large" />
+                style="@style/SampleText.Medium" />
 
             <View
                 style="@style/SampleLine"
