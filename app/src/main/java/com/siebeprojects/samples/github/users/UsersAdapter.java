@@ -87,9 +87,7 @@ final class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
     @SuppressWarnings("unchecked")
     public void onBindViewHolder(UsersAdapter.ViewHolder holder, int position) {
 
-        // Get the data model based on position
         User user = items.get(position);
-        
         String name = user.getName();
         String createdAt = user.getCreatedAt();
 

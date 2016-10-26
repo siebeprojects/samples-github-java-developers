@@ -115,7 +115,6 @@ final class UsersPresenter {
      */
     private void loadPage(int page) {
 
-        // Currently loading a page
         setLoading(true);
 
         GitHubApiAdapter adapter = GitHubApiAdapter.getInstance();
@@ -176,7 +175,7 @@ final class UsersPresenter {
         if (loadDetails) {
             loadUserDetails(totalCount, users);
         } else {
-            addUsersToList(users);
+            adapter.addItems(users);
             updatePagination(totalCount, adapter.getItemCount());
         }
     }
@@ -188,8 +187,12 @@ final class UsersPresenter {
      * @param users         The list of users with details
      */
     private void handleUserDetails(int totalCount, List<User> users) {
-        addUsersToList(users);
-        updatePagination(totalCount, adapter.getItemCount());
+
+        // This could be replaced by the lifecycle management of RXAndroid
+        if (!activity.isPaused()) {
+            adapter.addItems(users);
+            updatePagination(totalCount, adapter.getItemCount());
+        }
     }
 
     /** 
@@ -242,12 +245,5 @@ final class UsersPresenter {
                         handleUserDetails(totalCount, users);
                     }
                 });
-    }
-
-    /** 
-     * Handle the detail result
-     */
-    private void addUsersToList(List<User> users) {
-        adapter.addItems(users);
     }
 }
