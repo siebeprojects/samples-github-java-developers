@@ -95,7 +95,7 @@ public final class UserActivity extends AppCompatActivity {
         }
 
         initToolbar(login);
-        setAvatar(avatarUrl);
+        showAvatar(avatarUrl);
 
         presenter = new UserPresenter(this);
     }
@@ -174,6 +174,13 @@ public final class UserActivity extends AppCompatActivity {
 
         tv = (TextView)findViewById(R.id.text_createdat);
         tv.setText(AppUtils.getSimpleDateString(this, user.getCreatedAt()));
+
+        // set the avatar only when different then the already set avatar url
+        String avatar = user.getAvatarUrl();
+        if (avatar == null || !avatar.equals(this.avatarUrl)) {
+            this.avatarUrl = avatar;
+            showAvatar(avatar);
+        }
     }
 
     /** 
@@ -192,7 +199,7 @@ public final class UserActivity extends AppCompatActivity {
      * @param avatarUrl 
      */
     @SuppressWarnings("unchecked")
-    private void setAvatar(String avatarUrl) {
+    private void showAvatar(String avatarUrl) {
 
         ImageView bkgImage    = (ImageView)findViewById(R.id.image_background);
         ImageView avatarImage = (ImageView)findViewById(R.id.image_avatar);

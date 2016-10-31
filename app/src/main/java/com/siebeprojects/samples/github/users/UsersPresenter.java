@@ -70,6 +70,7 @@ final class UsersPresenter {
         this.nextPage = 1;
 
         // REMIND: enable this if details loading should be activated
+        // This will cause rate limit issues with Github.
         //this.loadDetails = true;
     }
 
@@ -102,7 +103,6 @@ final class UsersPresenter {
     private void setLoading(boolean loading) {
 
         this.loading = loading;
-
         if (!activity.isPaused()) {
             activity.showLoading(loading && adapter.getItemCount() == 0);
         }
@@ -115,7 +115,6 @@ final class UsersPresenter {
      */
     private void loadPage(int page) {
 
-        // Currently loading a page
         setLoading(true);
 
         GitHubApiAdapter adapter = GitHubApiAdapter.getInstance();
@@ -127,7 +126,6 @@ final class UsersPresenter {
 
                     @Override
                     public void onCompleted() {
-                        // comment this line if loading user details
                         if (!loadDetails) {
                             setLoading(false);
                         }
@@ -161,8 +159,7 @@ final class UsersPresenter {
 
     /** 
      * Handle the search result, load all user details for 
-     * the search result. For now, the loading of details has been disabled as this
-     * causes quickly a rate limit exceeded on github. 
+     * the search result if the loadDetails boolean is true.
      * 
      * @param searchResult The search result with users
      */
@@ -173,13 +170,29 @@ final class UsersPresenter {
             return;
         }
         List<User> users = searchResult.getItems();
+        int totalCount = searchResult.getTotalCount();
 
         if (loadDetails) {
-            loadUserDetails(users);
+            loadUserDetails(totalCount, users);
         } else {
-            addUsersToList(users);
+            adapter.addItems(users);
+            updatePagination(totalCount, adapter.getItemCount());
         }
-        updatePagination(searchResult.getTotalCount(), adapter.getItemCount());
+    }
+
+    /** 
+     * Handle the incoming user details
+     * 
+     * @param totalCount    The total amount of items in the search result
+     * @param users         The list of users with details
+     */
+    private void handleUserDetails(int totalCount, List<User> users) {
+
+        // This could be replaced by the lifecycle management of RXAndroid
+        if (!activity.isPaused()) {
+            adapter.addItems(users);
+            updatePagination(totalCount, adapter.getItemCount());
+        }
     }
 
     /** 
@@ -191,11 +204,10 @@ final class UsersPresenter {
      * In order to get the Link header info the Observable should contain the Response
      * Object and not directly the SearchResult object.
      * 
-     * @param totalCount
-     * @param itemCount 
+     * @param totalCount    The total count of items in the search result
+     * @param itemCount     The current count of items in the adapter
      */
     private void updatePagination(int totalCount, int itemCount) {
-
         this.curPage = nextPage;
         if (itemCount < totalCount) {
             this.nextPage++;
@@ -206,9 +218,10 @@ final class UsersPresenter {
      * Load the user details for each user object. The rate limit of GitHub does not allow
      * to load user details often and thus has been disabled. 
      * 
+     * @param totalCount
      * @param users The list of users for which user details should be loaded.
      */
-    private void loadUserDetails(List<User> users) {
+    private void loadUserDetails(final int totalCount, List<User> users) {
 
         GitHubApiAdapter adapter = GitHubApiAdapter.getInstance();
         Observable<List<User>> result = adapter.getUserDetailsAsList(users);
@@ -229,15 +242,8 @@ final class UsersPresenter {
 
                     @Override
                     public void onNext(List<User> users) {
-                        addUsersToList(users);
+                        handleUserDetails(totalCount, users);
                     }
                 });
-    }
-
-    /** 
-     * Handle the detail result
-     */
-    private void addUsersToList(List<User> users) {
-        adapter.addItems(users);
     }
 }
