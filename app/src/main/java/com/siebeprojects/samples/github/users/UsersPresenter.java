@@ -60,18 +60,30 @@ final class UsersPresenter {
 
     /** 
      * Create a new UsersPresenter
-     * 
-     * @param activity The UsersActivity
-     * @param adapter The adapter holding the elements
      */
-    UsersPresenter(UsersActivity activity, UsersAdapter adapter) {
-        this.activity = activity;
-        this.adapter  = adapter;
+    UsersPresenter() {
         this.nextPage = 1;
-
         // REMIND: enable this if details loading should be activated
         // This will cause rate limit issues with Github.
         //this.loadDetails = true;
+    }
+
+    /** 
+     * Set the activity into this users presenter
+     * 
+     * @param activity 
+     */
+    void setActivity(UsersActivity activity) {
+        this.activity = activity;
+    }
+
+    /** 
+     * Set the activity into this users presenter
+     * 
+     * @param activity 
+     */
+    void setAdapter(UsersAdapter adapter) {
+        this.adapter = adapter;
     }
 
     /** 
