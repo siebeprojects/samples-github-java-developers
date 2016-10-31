@@ -78,9 +78,9 @@ final class UsersPresenter {
     }
 
     /** 
-     * Set the activity into this users presenter
+     * Set the adapter into this users presenter
      * 
-     * @param activity 
+     * @param adapter 
      */
     void setAdapter(UsersAdapter adapter) {
         this.adapter = adapter;
