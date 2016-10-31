@@ -97,7 +97,8 @@ public final class UserActivity extends AppCompatActivity {
         initToolbar(login);
         showAvatar(avatarUrl);
 
-        presenter = new UserPresenter(this);
+        presenter = new UserPresenter();
+        presenter.setActivity(this);
     }
 
     /**
