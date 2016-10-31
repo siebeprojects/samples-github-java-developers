@@ -42,10 +42,16 @@ final class UserPresenter {
 
     /** 
      * Create a new UserPresenter
-     * 
-     * @param activity The UsersActivity
      */
-    UserPresenter(UserActivity activity) {
+    UserPresenter() {
+    }
+
+    /** 
+     * Set the activity into this presenter
+     * 
+     * @param activity 
+     */
+    void setActivity(UserActivity activity) {
         this.activity = activity;
     }
 

@@ -71,7 +71,11 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
 
         // initialize the adapter
         adapter = new UsersAdapter(this);
-        presenter = new UsersPresenter(this, adapter);
+
+        // construct the presenter
+        presenter = new UsersPresenter();
+        presenter.setActivity(this);
+        presenter.setAdapter(adapter);
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setAdapter(adapter);
