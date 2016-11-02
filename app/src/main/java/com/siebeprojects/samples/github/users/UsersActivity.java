@@ -26,6 +26,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.util.List;
+
 import com.siebeprojects.samples.github.R;
 import com.siebeprojects.samples.github.model.User;
 import com.siebeprojects.samples.github.user.UserActivity;
@@ -36,7 +38,10 @@ import com.siebeprojects.samples.github.util.ThresholdOnScrollListener;
  * The main users activity showing a list of 
  * Github users that use Java.
  */
-public final class UsersActivity extends AppCompatActivity implements UsersAdapter.OnItemClickListener, ThresholdListener {
+public class UsersActivity extends AppCompatActivity implements UsersAdapter.OnItemClickListener, ThresholdListener, UsersPresenterView {
+
+    /** Tag for logging */
+    private final static String TAG = "samples_UsersActivity";
 
     /** Key for animating the avatar profile */
     private final static String KEY_PROFILE      = "profile";
@@ -44,17 +49,14 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
     /** The scrolling threshold before new items should be loaded */
     private final static int SCROLL_THRESHOLD   = 5;
 
-    /** Tag for logging */
-    private final static String TAG = "samples_UsersActivity";
-
     /** The users adapter */
     private UsersAdapter adapter;
         
     /** The presenter loading users */
     private UsersPresenter presenter;
 
-    /** the activity is paused */
-    private boolean paused;
+    /** the activity is active */
+    private boolean active;
 
     /** The ThresholdOnScrollListener */
     private ThresholdOnScrollListener listener;
@@ -74,8 +76,7 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
 
         // construct the presenter
         presenter = new UsersPresenter();
-        presenter.setActivity(this);
-        presenter.setAdapter(adapter);
+        presenter.initialize(this);
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setAdapter(adapter);
@@ -92,7 +93,7 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
     @Override
     public void onPause() {
         super.onPause();
-        paused = true;
+        active = false;
     }
 
     /**
@@ -101,7 +102,7 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
     @Override
     public void onResume() {
         super.onResume();
-        paused = false;
+        active = true;
         presenter.loadFirstPage();
     }
 
@@ -124,30 +125,55 @@ public final class UsersActivity extends AppCompatActivity implements UsersAdapt
         presenter.loadNextPage();
     }
 
-    /** 
-     * Show the loading animation or not
+    /**
+     * {@inheritDoc}
      */
-    void showLoading(boolean show) {
-        View v = findViewById(R.id.progressbar);
-        v.setVisibility(show ? View.VISIBLE : View.GONE);
+    @Override
+    public void addItems(List<User> items) {
+        if (!isActive()) {
+            return;
+        }
+        adapter.addItems(items);
     }
 
-    /** 
-     * Is the activity paused
-     * 
-     * @return true when paused, false otherwise 
+    /**
+     * {@inheritDoc}
      */
-    boolean isPaused() {
-        return paused;
+    @Override
+    public int getItemCount() {
+        return adapter.getItemCount();
     }
 
-    /** 
-     * Show a request error to the user
+    /**
+     * {@inheritDoc}
      */
-    void showRequestError() {
+    @Override
+    public boolean isActive() {
+        return active;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showRequestError() {
+        if (!isActive()) {
+            return;
+        }
         View view = findViewById(R.id.layout_activity);
         Snackbar snackbar = Snackbar.make(view, R.string.error_request, Snackbar.LENGTH_LONG);
         snackbar.show();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showLoading(boolean val) {
+        if (!isActive()) {
+            return;
+        }
+        View v = findViewById(R.id.progressbar);
+        v.setVisibility(val ? View.VISIBLE : View.GONE);
+    }
 }
