@@ -80,7 +80,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/SampleText.Small.Third"
+                style="@style/SampleText.Medium.Third"
                 android:text="@string/label_name"/>
 
             <TextView
@@ -98,7 +98,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/SampleText.Small.Third"
+                style="@style/SampleText.Medium.Third"
                 android:text="@string/label_email"/>
 
             <TextView
@@ -117,7 +117,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/SampleText.Small.Third"
+                style="@style/SampleText.Medium.Third"
                 android:text="@string/label_followers"/>
 
             <TextView
@@ -135,7 +135,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/SampleText.Small.Third"
+                style="@style/SampleText.Medium.Third"
                 android:text="@string/label_createdat"/>
 
             <TextView
