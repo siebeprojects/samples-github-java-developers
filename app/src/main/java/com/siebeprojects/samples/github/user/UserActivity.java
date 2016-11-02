@@ -41,7 +41,7 @@ import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation;
 /**
  * The user details activity.
  */
-public final class UserActivity extends AppCompatActivity {
+public class UserActivity extends AppCompatActivity implements UserPresenterView {
 
     /** Tag for logging */
     private final static String TAG                = "samples_UserActivity";
@@ -53,8 +53,8 @@ public final class UserActivity extends AppCompatActivity {
     /** The presenter loading a user */
     private UserPresenter presenter;
 
-    /** the activity is paused */
-    private boolean paused;
+    /** Is the activity active */
+    private boolean active;
 
     /** The login name of the user */
     private String login;
@@ -98,7 +98,7 @@ public final class UserActivity extends AppCompatActivity {
         showAvatar(avatarUrl);
 
         presenter = new UserPresenter();
-        presenter.setActivity(this);
+        presenter.initialize(this);
     }
 
     /**
@@ -107,7 +107,7 @@ public final class UserActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        paused = true;
+        active = false;
     }
 
     /**
@@ -116,7 +116,7 @@ public final class UserActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        paused = false;
+        active = true;
         presenter.loadUser(login);
     }
 
@@ -148,22 +148,15 @@ public final class UserActivity extends AppCompatActivity {
         return val;
     }
 
-    /** 
-     * Is the activity paused
-     * 
-     * @return true when paused, false otherwise 
+    /**
+     * {@inheritDoc}
      */
-    boolean isPaused() {
-        return paused;
-    }
+    @Override
+    public void setUser(User user) {
 
-    /** 
-     * Set the user into the ui elements
-     * 
-     * @param user The user to update
-     */
-    void setUser(User user) {
-
+        if (!isActive()) {
+            return;
+        }
         TextView tv = (TextView)findViewById(R.id.text_name);
         tv.setText(user.getName());
 
@@ -184,11 +177,23 @@ public final class UserActivity extends AppCompatActivity {
         }
     }
 
-    /** 
-     * Show a request error to the user
+    /**
+     * {@inheritDoc}
      */
-    void showRequestError() {
-        
+    @Override
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showRequestError() {
+
+        if (!isActive()) {
+            return;
+        }
         CoordinatorLayout layout = (CoordinatorLayout)findViewById(R.id.layout_coordinator);
         Snackbar snackbar = Snackbar.make(layout, R.string.error_request, Snackbar.LENGTH_LONG);
         snackbar.show();
