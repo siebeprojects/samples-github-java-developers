@@ -34,17 +34,11 @@ import rx.schedulers.Schedulers;
  * UsersPresenter responsible for loading and updating the adapter
  * with new users.
  */
-final class UsersPresenter {
+class UsersPresenter {
 
     private final static String TAG      = "samples_UsersPresenter";
 
     private final static int PER_PAGE    = 10;
-
-    /** The users activity */
-    private UsersActivity activity;
-
-    /** The users adapter */
-    private UsersAdapter adapter;
 
     /** The current page this is loaded */
     private int curPage;
@@ -58,32 +52,27 @@ final class UsersPresenter {
     /** Should details be loaded for each item */
     private boolean loadDetails;
 
+    /** The users presenter view */
+    private UsersPresenterView view;
+
     /** 
      * Create a new UsersPresenter
      */
     UsersPresenter() {
         this.nextPage = 1;
+
         // REMIND: enable this if details loading should be activated
         // This will cause rate limit issues with Github.
         //this.loadDetails = true;
     }
 
     /** 
-     * Set the activity into this users presenter
+     * Initialize the presenter with the presenter view
      * 
-     * @param activity 
+     * @param view The view that is using this presenter
      */
-    void setActivity(UsersActivity activity) {
-        this.activity = activity;
-    }
-
-    /** 
-     * Set the adapter into this users presenter
-     * 
-     * @param adapter 
-     */
-    void setAdapter(UsersAdapter adapter) {
-        this.adapter = adapter;
+    void initialize(UsersPresenterView view) {
+        this.view = view;
     }
 
     /** 
@@ -109,15 +98,13 @@ final class UsersPresenter {
     }
 
     /** 
-     * Set loading and inform the activity to show the loading
+     * Set loading and inform the view to show the loading
      * animation.
      */
     private void setLoading(boolean loading) {
 
         this.loading = loading;
-        if (!activity.isPaused()) {
-            activity.showLoading(loading && adapter.getItemCount() == 0);
-        }
+        view.showLoading(loading && view.getItemCount() == 0);
     }
 
     /** 
@@ -161,12 +148,8 @@ final class UsersPresenter {
      * @param e The Throwable causing the error
      */
     private void handleRequestError(Throwable e) {
-
-        Log.i(TAG, "Error loading data: " + e.toString());
         setLoading(false);
-        if (!activity.isPaused()) {
-            activity.showRequestError();
-        }
+        view.showRequestError();
     }
 
     /** 
@@ -177,18 +160,17 @@ final class UsersPresenter {
      */
     private void handleSearchResult(SearchResult searchResult) {
 
-        // This could be replaced by the lifecycle management of RXAndroid
-        if (activity.isPaused()) {
-            return;
-        }
-        List<User> users = searchResult.getItems();
-        int totalCount = searchResult.getTotalCount();
+        if (view.isActive()) {
 
-        if (loadDetails) {
-            loadUserDetails(totalCount, users);
-        } else {
-            adapter.addItems(users);
-            updatePagination(totalCount, adapter.getItemCount());
+            List<User> users = searchResult.getItems();
+            int totalCount = searchResult.getTotalCount();
+
+            if (loadDetails) {
+                loadUserDetails(totalCount, users);
+            } else {
+                view.addItems(users);
+                updatePagination(totalCount, view.getItemCount());
+            }
         }
     }
 
@@ -200,10 +182,9 @@ final class UsersPresenter {
      */
     private void handleUserDetails(int totalCount, List<User> users) {
 
-        // This could be replaced by the lifecycle management of RXAndroid
-        if (!activity.isPaused()) {
-            adapter.addItems(users);
-            updatePagination(totalCount, adapter.getItemCount());
+        if (view.isActive()) {
+            view.addItems(users);
+            updatePagination(totalCount, view.getItemCount());
         }
     }
 

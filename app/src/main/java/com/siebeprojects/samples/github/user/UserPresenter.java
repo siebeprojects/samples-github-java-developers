@@ -30,29 +30,23 @@ import rx.schedulers.Schedulers;
 /**
  * UserPresenter responsible for loading the details of the given user.
  */
-final class UserPresenter {
+class UserPresenter {
 
-    public final static String TAG      = "samples_UserPresenter";
+    final static String TAG      = "samples_UserPresenter";
 
-    /** The user activity */
-    private UserActivity activity;
+    /** The User presenter view */
+    private UserPresenterView view;
 
     /** Is the presenter currently loading a user */
     private boolean loading;
 
     /** 
-     * Create a new UserPresenter
-     */
-    UserPresenter() {
-    }
-
-    /** 
-     * Set the activity into this presenter
+     * Set the view into this presenter
      * 
-     * @param activity 
+     * @param view The view of the presenter
      */
-    void setActivity(UserActivity activity) {
-        this.activity = activity;
+    void initialize(UserPresenterView view) {
+        this.view = view;
     }
 
     /** 
@@ -106,21 +100,16 @@ final class UserPresenter {
      * @param e The Throwable causing the error
      */
     private void handleRequestError(Throwable e) {
-        Log.i(TAG, "Error loading data: " + e.toString());
         setLoading(false);
-        if (!activity.isPaused()) {
-            activity.showRequestError();
-        }
+        view.showRequestError();
     }
 
     /** 
-     * Handle the loaded user
+     * Handle the loaded user and set it into the view
      * 
      * @param user 
      */
     private void handleUserResult(User user) {
-        if (!activity.isPaused()) {
-            activity.setUser(user);
-        }
+        view.setUser(user);
     }
 }

@@ -44,7 +44,7 @@ import com.siebeprojects.samples.github.util.AppUtils;
 /**
  *
  */
-final class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
+class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
 
     private final static String TAG = "samples_UsersAdapter";
 
