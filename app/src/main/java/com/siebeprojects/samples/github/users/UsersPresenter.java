@@ -53,7 +53,7 @@ class UsersPresenter {
     private boolean loadDetails;
 
     /** The users presenter view */
-    private UsersPresenterView view;
+    private UsersView view;
 
     /** 
      * Create a new UsersPresenter
@@ -71,7 +71,7 @@ class UsersPresenter {
      * 
      * @param view The view that is using this presenter
      */
-    void initialize(UsersPresenterView view) {
+    void initialize(UsersView view) {
         this.view = view;
     }
 

@@ -24,7 +24,7 @@ import com.siebeprojects.samples.github.model.User;
  * The interface used by the presenter to notify the view
  * to show new content.
  */
-interface UserPresenterView {
+interface UserView {
 
     /** 
      * Set the user into the view

@@ -41,7 +41,7 @@ import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation;
 /**
  * The user details activity.
  */
-public class UserActivity extends AppCompatActivity implements UserPresenterView {
+public class UserActivity extends AppCompatActivity implements UserView {
 
     /** Tag for logging */
     private final static String TAG                = "samples_UserActivity";

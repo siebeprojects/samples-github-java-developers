@@ -35,7 +35,7 @@ class UserPresenter {
     final static String TAG      = "samples_UserPresenter";
 
     /** The User presenter view */
-    private UserPresenterView view;
+    private UserView view;
 
     /** Is the presenter currently loading a user */
     private boolean loading;
@@ -45,7 +45,7 @@ class UserPresenter {
      * 
      * @param view The view of the presenter
      */
-    void initialize(UserPresenterView view) {
+    void initialize(UserView view) {
         this.view = view;
     }
 

@@ -38,7 +38,7 @@ import com.siebeprojects.samples.github.util.ThresholdOnScrollListener;
  * The main users activity showing a list of 
  * Github users that use Java.
  */
-public class UsersActivity extends AppCompatActivity implements UsersAdapter.OnItemClickListener, ThresholdListener, UsersPresenterView {
+public class UsersActivity extends AppCompatActivity implements UsersAdapter.OnItemClickListener, ThresholdListener, UsersView {
 
     /** Tag for logging */
     private final static String TAG = "samples_UsersActivity";
