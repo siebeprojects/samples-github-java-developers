@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="SampleText" parent="@android:style/TextAppearance.Medium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_dark_primary</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="SampleText.XXSmall">
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="SampleText.XSmall">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="SampleText.Small">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="SampleText.Small.Second">
+        <item name="android:textColor">@color/text_dark_second</item>
+    </style>
+
+    <style name="SampleText.Small.Third">
+        <item name="android:textColor">@color/text_dark_third</item>
+    </style>
+
+    <style name="SampleText.Small.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SampleText.Small.Scroll">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:scrollHorizontally">true</item>
+    </style>
+
+    <style name="SampleText.Medium">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="SampleText.Medium.Third">
+        <item name="android:textColor">@color/text_dark_third</item>
+    </style>
+
+    <style name="SampleText.Medium.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SampleText.Large">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="SampleText.Large.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SampleText.XLarge">
+        <item name="android:textSize">32sp</item>
+    </style>
+
+    <style name="SampleText.XLarge.Second">
+        <item name="android:textColor">@color/text_dark_second</item>
+    </style>
+
+    <style name="SampleText.XLarge.Second.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SampleText.Medium.Third.Info">
+        <item name="android:layout_marginLeft">@dimen/border_xxlarge</item>
+        <item name="android:layout_marginRight">@dimen/border_xxlarge</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="SampleProgressbar" parent="@style/Widget.AppCompat.ProgressBar">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
+
+    <style name="SampleLine">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_height">0.8dp</item>
+        <item name="android:background">@color/divider_dark</item>
+    </style>
+
+</resources>
+
