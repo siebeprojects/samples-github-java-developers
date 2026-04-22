@@ -43,7 +43,7 @@ public class GitHubApiAdapter {
     private static GitHubApiAdapter adapter;
 
     /** The service */
-    private GitHubService service;
+    private final GitHubService service;
 
     /** 
      * Obtain an instance of this GitHubApiAdapter. 

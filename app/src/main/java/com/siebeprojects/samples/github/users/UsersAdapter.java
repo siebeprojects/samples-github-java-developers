@@ -19,7 +19,7 @@ package com.siebeprojects.samples.github.users;
 
 import android.content.Context;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 
@@ -30,7 +30,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide; 
+import com.bumptech.glide.Glide;
 
 import com.siebeprojects.samples.github.R;
 import com.siebeprojects.samples.github.model.User;
@@ -49,17 +49,17 @@ class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
     private final static String TAG = "samples_UsersAdapter";
 
     /** The list of users */
-    private List<User> items;
+    private final List<User> items;
 
     /** The listener */
     private OnItemClickListener listener;
-    
-    /** The users activity */
-    private UsersActivity activity;
 
-    /** 
+    /** The users activity */
+    private final UsersActivity activity;
+
+    /**
      * Create a new UsersAdapter
-     * 
+     *
      * @param activity
      */
     UsersAdapter(UsersActivity activity) {
@@ -79,25 +79,24 @@ class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
         View userView = inflater.inflate(R.layout.listitem_users, parent, false);
         return new ViewHolder(userView);
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("unchecked")
     public void onBindViewHolder(UsersAdapter.ViewHolder holder, int position) {
 
         User user = items.get(position);
         String name = user.getName();
         String createdAt = user.getCreatedAt();
 
-        // set the name field 
+        // set the name field
         if (TextUtils.isEmpty(name)) {
             name = user.getLogin();
         }
         holder.name.setText(name);
 
-        // set the description field 
+        // set the description field
         holder.description.setText(AppUtils.getSimpleDateString(activity, createdAt));
         holder.description.setVisibility(TextUtils.isEmpty(createdAt) ? View.GONE : View.VISIBLE);
 
@@ -106,17 +105,17 @@ class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
 
         String url = user.getAvatarUrl();
         if (TextUtils.isEmpty(url)) {
-            Glide.clear(holder.avatar);
+            Glide.with(activity).clear(holder.avatar);
         } else {
             Glide.with(activity).load(url)
-                .bitmapTransform(new CropCircleTransformation(activity))
+                .transform(new CropCircleTransformation())
                 .into(holder.avatar);
         }
     }
 
-    /** 
+    /**
      * Set the listener in this adapter
-     * 
+     *
      * @param listener
      */
     void setListener(OnItemClickListener listener) {
@@ -157,17 +156,17 @@ class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    /** 
+    /**
      * Add new items in this adapter.
      *
-     * @param newItems 
+     * @param newItems
      */
     void addItems(List<User> newItems) {
         items.addAll(newItems);
         notifyDataSetChanged();
     }
 
-    /** 
+    /**
      * Add new items in this adapter.
      *
      * @param newItem
@@ -177,19 +176,18 @@ class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    /** 
+    /**
      * Get the initials given the name of the user
-     * 
+     *
      * @param name
      */
     private String getInitials(String name) {
         return (TextUtils.isEmpty(name)) ? "" : name.substring(0, 1).toUpperCase();
     }
 
-
-    /** 
+    /**
      * handleOnClick
-     * 
+     *
      * @param position
      */
     private void handleOnClick(int position, View transView) {
@@ -200,16 +198,16 @@ class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
         }
     }
 
-    /** 
+    /**
      * The click listener informing a user has been clicked
      */
     interface OnItemClickListener {
 
-        /** 
+        /**
          * Called when a user has been clicked
-         * 
+         *
          * @param user
-         * @param position 
+         * @param position
          * @param view The ImageView for transition
          */
         void onItemClick(User user, int position, View view);
@@ -238,15 +236,15 @@ class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
         ViewHolder(View row) {
             super(row);
 
-            name = (TextView) row.findViewById(R.id.text_name);
-            description = (TextView) row.findViewById(R.id.text_description);
-            initials = (TextView) row.findViewById(R.id.text_initials);
-            avatar = (ImageView) row.findViewById(R.id.image_avatar);
+            name = row.findViewById(R.id.text_name);
+            description = row.findViewById(R.id.text_description);
+            initials = row.findViewById(R.id.text_initials);
+            avatar = row.findViewById(R.id.image_avatar);
 
             row.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        handleOnClick(getAdapterPosition(), avatar);
+                        handleOnClick(getBindingAdapterPosition(), avatar);
                     }
                 });
         }

@@ -20,14 +20,14 @@ package com.siebeprojects.samples.github.user;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.google.android.material.snackbar.Snackbar;
 
 import com.bumptech.glide.Glide;
 import com.siebeprojects.samples.github.R;
@@ -62,12 +62,12 @@ public class UserActivity extends AppCompatActivity implements UserView {
     /** The avatar url of the user */
     private String avatarUrl;
 
-    /** 
+    /**
      * Create launch activity
-     * 
-     * @param context 
+     *
+     * @param context
      * @param user
-     * 
+     *
      * @return The launch intent
      */
     public final static Intent createLaunchIntent(Context context, User user) {
@@ -90,7 +90,7 @@ public class UserActivity extends AppCompatActivity implements UserView {
             this.avatarUrl = savedInstanceState.getString(EXTRA_AVATAR_URL);
         } else {
             Intent intent = getIntent();
-            this.login = intent.getStringExtra(EXTRA_LOGIN);            
+            this.login = intent.getStringExtra(EXTRA_LOGIN);
             this.avatarUrl = intent.getStringExtra(EXTRA_AVATAR_URL);
         }
 
@@ -157,16 +157,16 @@ public class UserActivity extends AppCompatActivity implements UserView {
         if (!isActive()) {
             return;
         }
-        TextView tv = (TextView)findViewById(R.id.text_name);
+        TextView tv = findViewById(R.id.text_name);
         tv.setText(user.getName());
 
-        tv = (TextView)findViewById(R.id.text_email);
+        tv = findViewById(R.id.text_email);
         tv.setText(user.getEmail());
 
-        tv = (TextView)findViewById(R.id.text_followers);
+        tv = findViewById(R.id.text_followers);
         tv.setText(Integer.toString(user.getFollowers()));
 
-        tv = (TextView)findViewById(R.id.text_createdat);
+        tv = findViewById(R.id.text_createdat);
         tv.setText(AppUtils.getSimpleDateString(this, user.getCreatedAt()));
 
         // set the avatar only when different then the already set avatar url
@@ -194,42 +194,41 @@ public class UserActivity extends AppCompatActivity implements UserView {
         if (!isActive()) {
             return;
         }
-        CoordinatorLayout layout = (CoordinatorLayout)findViewById(R.id.layout_coordinator);
+        CoordinatorLayout layout = findViewById(R.id.layout_coordinator);
         Snackbar snackbar = Snackbar.make(layout, R.string.error_request, Snackbar.LENGTH_LONG);
         snackbar.show();
     }
 
-    /** 
+    /**
      * Set the avatar
-     * 
-     * @param avatarUrl 
+     *
+     * @param avatarUrl
      */
-    @SuppressWarnings("unchecked")
     private void showAvatar(String avatarUrl) {
 
-        ImageView bkgImage    = (ImageView)findViewById(R.id.image_background);
-        ImageView avatarImage = (ImageView)findViewById(R.id.image_avatar);
+        ImageView bkgImage    = findViewById(R.id.image_background);
+        ImageView avatarImage = findViewById(R.id.image_avatar);
 
         if (TextUtils.isEmpty(avatarUrl)) {
-            Glide.clear(bkgImage);
-            Glide.clear(avatarImage);
+            Glide.with(this).clear(bkgImage);
+            Glide.with(this).clear(avatarImage);
         } else {
             Glide.with(this).load(avatarUrl)
-                .bitmapTransform(new CropCircleTransformation(this))
+                .transform(new CropCircleTransformation())
                 .into(avatarImage);
 
             Glide.with(this).load(avatarUrl)
-                .bitmapTransform(new BlurTransformation(this, 50), new BrightnessFilterTransformation(this, -0.2f))
+                .transform(new com.bumptech.glide.load.MultiTransformation<>(
+                    new BlurTransformation(50), new BrightnessFilterTransformation(-0.2f)))
                 .into(bkgImage);
         }
     }
 
-    /** 
-     * 
-     * 
+    /**
+     *
      */
     private void initToolbar(String title) {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(login);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -1,24 +1,17 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
-	classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
+        classpath 'com.android.tools.build:gradle:8.13.2'
     }
-}
-
-plugins {
-    id 'com.github.ben-manes.versions' version '0.13.0'
 }
 
 allprojects {
-  gradle.projectsEvaluated {
-      tasks.withType(JavaCompile) {
-          options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
-          //options.compilerArgs << "-Xlint:unchecked"
-      }
-  }
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
+        }
+    }
 }
