@@ -1,31 +1,16 @@
-# Release notes
+# GitHub Java Developers
 
-## Release notes version 1.2.0
+A sample Android app that fetches and displays Java developers from the GitHub public API.
 
-A sample app loading Java Developers from the GitHub V3 API.
-This example uses the following libraries:
+## Features
 
-* Glide (Image loading)
-* Retrofit2 (Loading content from GitHub API)
-* RXJava (Threading for loading content)
-* JP Wasabeef Glide Transformations (Image manipulations)
+- Browse a scrollable list of Java developers found on GitHub
+- Tap any developer to view their profile details, including name, email, follower count, and join date
+- Avatars are displayed with a circular crop and a blurred background on the detail screen
 
-## Release notes version 1.1.0
+## Libraries
 
-A sample app loading Java Developers from the GitHub V3 API.
-This example uses the following libraries:
-
-* Glide (Image loading)
-* Retrofit2 (Loading content from GitHub API)
-* RXJava (Threading for loading content)
-* JP Wasabeef Glide Transformations (Image manipulations)
-
-## Release notes version 1.0.0
-
-A sample app loading Java Developers from the GitHub V3 API.
-This example uses the following libraries:
-
-* Glide (Image loading)
-* Retrofit2 (Loading content from GitHub API)
-* RXJava (Threading for loading content)
-* JP Wasabeef Glide Transformations (Image manipulations)
+- **Glide** — Image loading and caching
+- **Retrofit2** — HTTP client for the GitHub API
+- **RxJava** — Asynchronous threading
+- **JP Wasabeef Glide Transformations** — Image transformations (blur, circle crop)
