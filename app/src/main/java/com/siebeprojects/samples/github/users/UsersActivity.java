@@ -19,12 +19,12 @@ package com.siebeprojects.samples.github.users;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ import com.siebeprojects.samples.github.util.ThresholdListener;
 import com.siebeprojects.samples.github.util.ThresholdOnScrollListener;
 
 /**
- * The main users activity showing a list of 
+ * The main users activity showing a list of
  * Github users that use Java.
  */
 public class UsersActivity extends AppCompatActivity implements UsersAdapter.OnItemClickListener, ThresholdListener, UsersView {
@@ -51,7 +51,7 @@ public class UsersActivity extends AppCompatActivity implements UsersAdapter.OnI
 
     /** The users adapter */
     private UsersAdapter adapter;
-        
+
     /** The presenter loading users */
     private UsersPresenter presenter;
 
@@ -69,7 +69,7 @@ public class UsersActivity extends AppCompatActivity implements UsersAdapter.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
 
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recyclerview_users);
+        RecyclerView recyclerView = findViewById(R.id.recyclerview_users);
 
         // initialize the adapter
         adapter = new UsersAdapter(this);
@@ -112,7 +112,7 @@ public class UsersActivity extends AppCompatActivity implements UsersAdapter.OnI
     @Override
     public void onItemClick(User user, int position, View transView) {
         Intent intent = UserActivity.createLaunchIntent(this, user);
-        
+
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, transView, KEY_PROFILE);
         startActivity(intent, options.toBundle());
     }
@@ -151,7 +151,7 @@ public class UsersActivity extends AppCompatActivity implements UsersAdapter.OnI
     public boolean isActive() {
         return active;
     }
-    
+
     /**
      * {@inheritDoc}
      */

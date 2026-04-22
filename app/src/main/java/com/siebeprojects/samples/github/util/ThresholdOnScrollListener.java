@@ -18,11 +18,11 @@
 package com.siebeprojects.samples.github.util;
 
 import android.util.Log;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * Continues scroll listener for continues scrolling down and loading new 
+ * Continues scroll listener for continues scrolling down and loading new
  * elements to be added to the recycler view.
  */
 public final class ThresholdOnScrollListener extends RecyclerView.OnScrollListener {
@@ -30,19 +30,19 @@ public final class ThresholdOnScrollListener extends RecyclerView.OnScrollListen
     public final static String TAG  = "samples_ThresholdOnScrollListener";
 
     /** The layout manager */
-    private LinearLayoutManager manager;
+    private final LinearLayoutManager manager;
 
     /** The listener interested in load more events */
-    private ThresholdListener listener;
+    private final ThresholdListener listener;
 
     /** The threshold */
-    private int threshold;
+    private final int threshold;
 
-    /** 
+    /**
      * Construct a new ThresholdOnScrollListener
-     * 
-     * @param manager  
-     * @param listener 
+     *
+     * @param manager
+     * @param listener
      * @param threshold
      */
     public ThresholdOnScrollListener(LinearLayoutManager manager, ThresholdListener listener, int threshold) {
@@ -54,7 +54,7 @@ public final class ThresholdOnScrollListener extends RecyclerView.OnScrollListen
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
-        
+
         int visibleItemCount = recyclerView.getChildCount();
         int totalItemCount   = manager.getItemCount();
         int firstVisibleItem = manager.findFirstVisibleItemPosition();

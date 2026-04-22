@@ -16,50 +16,36 @@
 
 package com.siebeprojects.samples.github.util;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Color;
 
-import com.bumptech.glide.Glide;
+import androidx.annotation.NonNull;
 
-import com.bumptech.glide.load.Transformation;
-import com.bumptech.glide.load.engine.Resource;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
-import com.bumptech.glide.load.resource.bitmap.BitmapResource;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
-/** 
- * Added background filling with WHITE to the image in order to 
- * remove the transparency.
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+
+/**
+ * Crops the image into a circle with a white background fill to remove transparency.
  */
-public class CropCircleTransformation implements Transformation<Bitmap> {
+public class CropCircleTransformation extends BitmapTransformation {
 
-    private BitmapPool mBitmapPool;
-
-    public CropCircleTransformation(Context context) {
-        this(Glide.get(context).getBitmapPool());
-    }
-
-    public CropCircleTransformation(BitmapPool pool) {
-        this.mBitmapPool = pool;
-    }
+    private static final String ID = "CropCircleTransformation";
+    private static final byte[] ID_BYTES = ID.getBytes(StandardCharsets.UTF_8);
 
     @Override
-        public Resource<Bitmap> transform(Resource<Bitmap> resource, int outWidth, int outHeight) {
-        Bitmap source = resource.get();
+    protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap source, int outWidth, int outHeight) {
         int size = Math.min(source.getWidth(), source.getHeight());
-
         int width = (source.getWidth() - size) / 2;
         int height = (source.getHeight() - size) / 2;
 
-        Bitmap bitmap = mBitmapPool.get(size, size, Bitmap.Config.ARGB_8888);
-        if (bitmap == null) {
-            bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        }
-
+        Bitmap bitmap = pool.get(size, size, Bitmap.Config.ARGB_8888);
         float r = size / 2f;
 
         Canvas canvas = new Canvas(bitmap);
@@ -68,23 +54,19 @@ public class CropCircleTransformation implements Transformation<Bitmap> {
         paint.setAntiAlias(true);
         canvas.drawCircle(r, r, r, paint);
 
-        BitmapShader shader =
-            new BitmapShader(source, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP);
+        BitmapShader shader = new BitmapShader(source, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP);
         if (width != 0 || height != 0) {
-            // source isn't square, move viewport to center
             Matrix matrix = new Matrix();
             matrix.setTranslate(-width, -height);
             shader.setLocalMatrix(matrix);
         }
         paint.setShader(shader);
-        paint.setAntiAlias(true);
-
         canvas.drawCircle(r, r, r, paint);
-
-        return BitmapResource.obtain(bitmap, mBitmapPool);
+        return bitmap;
     }
 
-    @Override public String getId() {
-        return "CropCircleTransformation()";
+    @Override
+    public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
+        messageDigest.update(ID_BYTES);
     }
 }
